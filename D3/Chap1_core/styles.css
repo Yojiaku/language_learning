@@ -1,0 +1,76 @@
+body{
+	font-family: "Meiryo UI";
+}
+
+table{
+	display: table;
+	border-spacing: 2px;
+	border: 1px solid #999;
+	border-collapse: collapse;
+	empty-cells: show;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-left: 0em;
+	margin-right: 0em;
+}
+
+table tbody .name th{
+	background-color: #d8e0f0;
+	color: #405060;
+	padding-right: 8px;
+	padding-left: 8px;
+	display: table-cell;
+	text-align: center;
+}
+
+table tbody tr th{
+	font-weight: normal;
+	color: #333;
+	text-align: left;
+	border-bottom-color: rgb(153, 153, 153);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-left-color: rgb(153, 153, 153);
+	border-left-style: solid;
+	border-left-width: 1px;
+	padding-left: 3px;
+}
+
+fieldset{
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(153, 153, 153);
+}
+
+fieldset legend{
+	color: #405060;
+	font-weight: bold;
+}
+
+a{
+	text-decoration: none;
+}
+
+a:link{
+	cursor: pointer;
+	color: #113366;
+}
+
+a:visited{
+	color: #c22;
+}
+
+fieldset table{
+	margin: 20px;
+	background-color: #eee;
+	font-weight: bold;
+}
+
+fieldset table td{
+	padding: 8px;
+}
+
+fieldset .d3_select_selector_table td.selected{
+	background-color: #ff5c00;
+	color: white;
+}

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+		D3 Core-select
+	</title>
+	<!-- D3 -->
+	<script type="text/javascript" src="../d3.min.js"></script>
+	<!-- hightlight code -->
+	<script type="text/javascript" src="../highlight/prism.js"></script>
+	<link rel="stylesheet" type="text/css" href="../highlight/prism.css" />
+	<!-- styles -->
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+</head>
+<body>
+<div style="margin: 0 auto; width: 1200px;">
+	<caption>【Core 核心】</caption>
+	<table>
+		<tbody>
+			<tr class="name">
+				<th>选择器</th>
+				<th>含义</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_select_selector">d3.select(selector)</a></th>
+				<th>选择第一个与指定字符串selector相匹配的元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_select_node">d3.select(node)</a></th>
+				<th>选择指定的节点</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selectAll_selector">d3.selectAll(selector)</a></th>
+				<th>选择所有与指定字符串slector相匹配的元素，选择的结果是一个数组，这些元素会按照文档的遍历顺序（从上到下）存入数组</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selectAll_nodes">d3.selectAll(nodes)</a></th>
+				<th>选择指定的节点数组</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_attr">selection.attr(name[, value])</a></th>
+				<th>如果指定了value参数，则用来设置所有选中元素中指定属性的值，否则返回选择集中第一个非空元素中指定属性的值
+				</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_classed">selection.classed(name[, value])</a></th>
+				<th>如果没有指定value参数，则返回与name参数匹配的第一个非空元素是否绑定了指定的CSS类</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_style">selection.style(name[, value[, priority]])</a></th>
+				<th>返回选择集中第一个非空元素中名为name的样式值，或设置选择集中所有元素中名为name的样式值为value参数指定的值</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_property">selection.property(name[, value])</a></th>
+				<th>一些HTML元素具有特殊的内置属性，使用标准的属性或样式操作符是访问不到的</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_text">selection.text([value])</a></th>
+				<th>返回第一个非空元素的文本内容，或设置选择集中所有元素的文本内容为指定的值</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_html">selection.html([value])</a></th>
+				<th>html操作符基于innerHTML属性，设置内部HTML的内容为value参数指定的值并取代任何已有的子元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_append">selection.append(name)</a></th>
+				<th>在当前选择集的最后追加指定名称的子元素，返回的新选择集包含这个新追加的子元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_insert">selection.insert(name[, before])</a></th>
+				<th>如果指定了before参数，则在选择集中的before参数指定的元素前添加name参数指定的元素；如果没有指定before参数或没有子元素匹配before参数，则直接使用selection.append的规则追加name参数指定的元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_remove">selection.remove()</a></th>
+				<th>从当前文档中删除选中的所有元素，并将这些元素返回</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_data">selection.data([value[, key]])</a></th>
+				<th>给当前选定的所有元素依次绑定values数组中的数据</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_enter">selection.enter()</a></th>
+				<th>返回输入选择</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_exit">selection.exit()</a></th>
+				<th>返回需要移除的元素选择</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_filter">selection.filter(selector)</a></th>
+				<th>过滤选择，返回一个新的选择只包含参数selector是true的元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_datum">selection.datum([value])</a></th>
+				<th>获取或设置每个选定的元素绑定的数据</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_sort">selection.sort(comparator)</a></th>
+				<th>用指定的比较函数对当前选择的元素排序，默认是d3.ascending（升序排序）</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_on">selection.on(type[, listener[, capture]])</a></th>
+				<th>给当前选择的每个元素，绑定或移除指定类型的事件监听器</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_event">d3.event</a></th>
+				<th>存储当前事件（如果有的话）的全局对象</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_mouse">d3.mouse(container)</a></th>
+				<th>返回当前d3.event相对于指定容器container的x和y坐标</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_transition">selection.transition()</a></th>
+				<th>为当前选择集开启一段过渡动画</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_select">selection.select(selector)</a></th>
+				<th>对当前选中的每个元素，选中其后代中第一个匹配选择器selector的子元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_selectAll">selection.selectAll(selector)</a></th>
+				<th>对当前选择的每个元素，选中所有匹配指定选择器字符串的子元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_each">selection.each(function)</a></th>
+				<th>为当前选择的每个元素，调用指定的函数</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_call">selection.call(function[, arguments...])</a></th>
+				<th>调用指定的函数一次，函数参数是当前的选择以及任何可选参数</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_empty">selection.empty()</a></th>
+				<th>如果当前选择为空，则返回true</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_node">selection.node()</a></th>
+				<th>返回当前选择的第一个非空的元素</th>
+			</tr>
+			<tr>
+				<th><a href="#d3_selection_size">selection.size()</a></th>
+				<th>返回在当前选择的元素的总个数</th>
+			</tr>
+		</tbody>
+	</table>
+
+	<fieldset>
+		<legend id="d3_select_selector">d3.select(selector)</legend>
+		<p>选择第一个与指定字符串selector相匹配的元素。如果没有匹配的元素，则返回一个空的选择对象。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_select_selector(){
+					/*选取第一个class为d3_select_selector_table的元素后面第一个tr元素的后面第一个td元素，
+					增加一个selected的class名称，使其背景颜色变为橘黄色，字体颜色变为白色*/
+					d3.select('.d3_select_selector_table').select('tr').select('td').classed("selected", true);
+				}
+			</code>
+		</pre>
+		<button onclick="d3_select_selector()">点击看看</button>
+		<table class="d3_select_selector_table">
+			<tr>
+				<td>Apple</td>
+				<td>Banana</td>
+				<td>Watermelon</td>
+			</tr>
+			<tr>
+				<td>Peach</td>
+				<td id="d3_select_selector_test">Strawberry</td>
+				<td>Pineapple</td>
+			</tr>
+		</table>
+
+		<table class="d3_select_selector_table">
+			<tr>
+				<td>Coco</td>
+				<td>Milk</td>
+			</tr>
+			<tr>
+				<td>Green Tea</td>
+				<td class="d3_select_selector_test">Beer</td>
+			</tr>
+		</table>
+
+		<script type="text/javascript">
+			function d3_select_selector(){
+				d3.select('.d3_select_selector_table').select('tr').select('td').classed("selected", true);
+			}	
+		</script>
+	</fieldset>
+
+	<fieldset>
+		<legend id="d3_select_node">d3.select(node)</legend>
+		<p>选择指定的节点。通常用于事件监听器中使用d3.select(this)选择当前节点或者与其他第三方库整合。</p>
+	</fieldset>
+</div>
+</body>
+</html>
