@@ -193,6 +193,515 @@
 	<fieldset>
 		<legend id="d3_select_node">d3.select(node)</legend>
 		<p>选择指定的节点。通常用于事件监听器中使用d3.select(this)选择当前节点或者与其他第三方库整合。</p>
+		<pre>
+			<code class="language-javascript">
+				// 给选中的class名为"d3_select_node_table"增加style
+				function d3_select_node(){
+					d3.select('.d3_select_node_table').on("click", function(){
+						d3.select(this).style('color', 'green');
+					})
+				}
+			</code>
+		</pre>
+		<button onclick="d3_select_node()">试试看</button>
+		<table class="d3_select_node_table">
+			<tr>
+				<td>Apple</td>
+				<td>Banana</td>
+				<td>Watermelon</td>
+			</tr>
+			<tr>
+				<td>Peach</td>
+				<td>Strawberry</td>
+				<td>Pineapple</td>
+			</tr>
+		</table>
+
+		<script type="text/javascript">
+			function d3_select_node(){
+				d3.select('.d3_select_node_table').on("click", function(){
+					d3.select(this).style('color', 'green');
+				})
+			}
+		</script>
+	</fieldset>
+
+	<fieldset>
+		<legend id="d3_selectAll_selector">d3.selectAll(selector)</legend>
+		<p>选择所有与指定参数selector相匹配的元素，选择的结果是一个数组，这些元素会按照文档的遍历顺序（从上到下）存入数组。如果当前文档中没有匹配的元素则返回空的选择</p>
+		<pre>
+			<code class="language-javascript">
+				// 选择class名为"d3_selectAll_selector_table"中所有td标签，使其背景色为橘黄色
+				function d3_selectAll_selector(){
+					d3.select('.d3_selectAll_selector_table').selectAll('td').style('background-color','#ff5c00');
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selectAll_selector()">试试看</button>
+		<table class="d3_selectAll_selector_table">
+			<tr>
+				<td>Apple</td>
+				<td>Banana</td>
+				<td>Watermelon</td>
+			</tr>
+			<tr>
+				<td>Peach</td>
+				<td>Strawberry</td>
+				<td>Pineapple</td>
+			</tr>
+		</table>
+
+		<script type="text/javascript">
+			function d3_selectAll_selector(){
+				d3.select('.d3_selectAll_selector_table').selectAll('td').style('background-color','#ff5c00');
+			}
+		</script>
+	</fieldset>
+
+	<fieldset>
+		<legend id="d3_selectAll_nodes">d3.selectAll(nodes)</legend>
+		<p>选择指定的结点数组。</p>
+		<p>选择的结果是一个元素数组。D3在这个数组上绑定了额外的方法可以操作这些元素，例如：为所有选中的元素设置属性值。</p>
+		<p>选择结果是分组的，而不是一个一维数组，元素数值中的每个值都是一个子数组。这保留了子选择的层次结构，所以当selectAll只选中一个元素时返回的结果看起来像[[node]]而不是[node]。</p>
+		<pre>
+			<code class="language-javascript">
+				// 在一个事件监听器中，选择当前元素的所有子元素
+				d3.selectAll(this.childNodes);
+				// 选择文档中所有的超链接
+				d3.selectAll(document.links); 
+			</code>
+		</pre>
+		<button onclick="d3_selectAll_nodes()">试试看</button>
+		<p class="d3_selectAll_nodes_test">
+			按F12在console后台查看
+		</p>
+		<script type="text/javascript">
+			function d3_selectAll_nodes(){
+				console.log(d3.selectAll(document.links));
+			}
+		</script>
+	</fieldset>
+
+	<fieldset>
+		<legend id="d3_selection_attr">selection.attr(name[, value])</legend>
+		<p>若指定了value参数，则用来设置所有选中元素中指定属性的值，否则返回选择集中一个非空元素中指定属性的值。</p>
+		<p>value可以是常数，也可以是函数，若是函数，则这个函数有两个参数：d代表当前元素绑定的数据，i代表当前元素在选中元素集合中的 索引。<pre style="color: red;">若value为null则移除指定的属性。</pre></p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_attr(){
+					// 绘制矩形的数据
+					var dataset = [5, 10, 15, 20, 25];
+
+					// 创建SVG
+					var svg = d3.select(".d3_selection_attr_test").append("svg").attr('width', '150px').attr('height','100px');
+
+					// 创建矩形
+					var rects = svg.selectAll("rect")
+									.data(dataset)
+									.enter()
+									.append('rect')
+									.attr({
+										'x':function(d, i){return i*160/dataset.length;}, //相对位移（横轴）i*160/dataset.length px
+										'y':function(d, i){return 40;}, //相对位移（纵轴）40px
+										'width': function(d, i){return i;},
+										'height': function(d, i){return dataset[i]},
+									})
+									.attr('fill', 'steelblue');
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_attr()">试试看</button>
+		<p class="d3_selection_attr_test">
+			
+		</p>
+		<script type="text/javascript">
+			function d3_selection_attr(){
+				// 绘制矩形的数据
+				var dataset = [5, 10, 15, 20, 25];
+
+				// 创建SVG
+				var svg = d3.select(".d3_selection_attr_test").append("svg").attr('width', '150px').attr('height','100px');
+
+				// 创建矩形
+				var rects = svg.selectAll("rect")
+								.data(dataset)
+								.enter()
+								.append('rect')
+								.attr({
+									'x':function(d, i){return i*160/dataset.length;}, //相对位移（横轴）i*160/dataset.length px
+									'y':function(d, i){return 40;}, //相对位移（纵轴）40px
+									'width': function(d, i){return i;},
+									'height': function(d, i){return dataset[i]},
+								})
+								.attr('fill', 'steelblue');
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_classed">
+		<legend>selection.classed(name[, value])</legend>
+		<p>若没有指定value参数，则返回与name参数匹配的第一个非空元素是否绑定了指定的css类，true表示绑定，false表示未绑定；如果指定了value参数，则值为true时绑定name参数指定的css类，为false时移除这个css类。</p>
+		<p>主要用来添加、移除或切换css类，value参数可以是一个布尔值或函数，若是函数，则这个函数有两个参数：d代表当前元素绑定的数据，i代表当前元素在选择结果集合中的索引。在函数内部可以使用this关键字引用当前元素，函数返回布尔类型的值。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_classed(){
+					// 绘制矩形的数据
+					var dataset = [15, 20, 25, 30, 35];
+					// 创建SVG
+					var svg = d3.select('#d3_selection_classed')
+								.append('svg')
+								.attr('width', '200px')
+								.attr('height', '100px');
+					// 创建矩形
+					var rects = svg.selectAll('rect')
+								.data(dataset)
+								.enter()
+								.append('rect')
+								.attr({
+									'x': function(d, i){return i*160/dataset.length;},
+									'y': function(d, i){return 20;},
+									'width': function(d, i){return dataset[i];},
+									'height': function(d, i){return dataset[i];}
+								});
+
+					// 使用函数值绑定元素的css类
+					rects.classed({
+						'odd': function(d, i){return i%2==0 ? true : false;},
+						'even': function(d, i){return i%2==0 ? false : true;}
+					});
+
+					// 切换矩形的css类
+					rects.on('click', function() {
+						var rect = d3.select(this);
+						if(rect.classed('stroke opacity')){ // 取得元素是否绑定指定名称的css类
+							rect.classed('stroke opacity', false); // 移除绑定的css类
+						}else{
+							rect.classed('stroke opacity', true); // 给元素绑定css类
+						}
+					});
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_classed()">试试看</button>
+		<script type="text/javascript">
+			function d3_selection_classed(){
+				// 绘制矩形的数据
+				var dataset = [15, 20, 25, 30, 35];
+				// 创建SVG
+				var svg = d3.select('#d3_selection_classed')
+							.append('svg')
+							.attr('width', '200px')
+							.attr('height', '100px');
+				// 创建矩形
+				var rects = svg.selectAll('rect')
+							.data(dataset)
+							.enter()
+							.append('rect')
+							.attr({
+								'x': function(d, i){return i*160/dataset.length;},
+								'y': function(d, i){return 20;},
+								'width': function(d, i){return dataset[i];},
+								'height': function(d, i){return dataset[i];}
+							});
+
+				// 使用函数值绑定元素的css类
+				rects.classed({
+					'odd': function(d, i){return i%2==0 ? true : false;},
+					'even': function(d, i){return i%2==0 ? false : true;}
+				});
+
+				// 切换矩形的css类
+				rects.on('click', function() {
+					var rect = d3.select(this);
+					if(rect.classed('stroke opacity')){ // 取得元素是否绑定指定名称的css类
+						rect.classed('stroke opacity', false); // 移除绑定的css类
+					}else{
+						rect.classed('stroke opacity', true); // 给元素绑定css类
+					}
+				});
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_style">
+		<legend>selection.style(name[, value[, priority]])</legend>
+		<p>返回选择集中第一个非空元素中名为name的样式，或设置选择集中所有元素中名为name的样式值为value指定的值。参数priority用来设置优先级，默认为null。</p>
+		<p>value参数可以为常数也可为函数，若为函数，则此函数有两个参数：d为当前元素已绑定的数据，i为当前元素在元素集中的索引。在函数内部也可以使用this关键字引用当前元素。若value的值为null，则会删除name参数指定的样式。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_style(){
+					//绘制矩形的数据
+					var dataset = [15, 20, 25, 30, 35];
+					//创建SVG
+					var svg = d3.select('#d3_selection_style')
+								.append('svg')
+								.attr('width', '500px')
+								.attr('height', '100px');
+					// 创建矩形
+					var rects = svg.selectAll('rect')
+								.data(dataset)
+								.enter()
+								.append('rect')
+								.attr({
+									'x': function(d, i){return i*160/dataset.length;},
+									'y': function(d, i){return 20;},
+									'width': function(d, i){return dataset[i];},
+									'height': function(d, i){return dataset[i];}
+								})
+								.attr('fill', 'balck');
+
+					//设置其属性
+					rects.style({
+						'stroke-width': '5px',
+						'stroke': function(d, i){return 'rgb('+2*d+','+2*d+','+d+')';},
+						'fill': function(d, i){return 'rgb('+5*d+','+10*d+','+d+')';}
+					});
+
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_style()">试试看</button>
+		<script type="text/javascript">
+			function d3_selection_style(){
+				//绘制矩形的数据
+				var dataset = [15, 20, 25, 30, 35];
+				//创建SVG
+				var svg = d3.select('#d3_selection_style')
+							.append('svg')
+							.attr('width', '500px')
+							.attr('height', '100px');
+				// 创建矩形
+				var rects = svg.selectAll('rect')
+							.data(dataset)
+							.enter()
+							.append('rect')
+							.attr({
+								'x': function(d, i){return i*160/dataset.length;},
+								'y': function(d, i){return 20;},
+								'width': function(d, i){return dataset[i];},
+								'height': function(d, i){return dataset[i];}
+							})
+							.attr('fill', 'balck');
+
+				//设置其属性
+				rects.style({
+					'stroke-width': '5px',
+					'stroke': function(d, i){return 'rgb('+2*d+','+2*d+','+d+')';},
+					'fill': function(d, i){return 'rgb('+5*d+','+10*d+','+d+')';}
+				});
+
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_property">
+		<legend>selection.property(name[, value])</legend>
+		<p>一些HTML元素具有特殊的内置属性，使用标准的属性或样式操作符是访问不到的。如：表单中文本字段（Text）放入value字符串属性、复选框（checkboxes）的checked布尔型属性。可以使用property操作符来获取或设置。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_property(){
+					d3.select('#d3_selection_property_text_id')
+						.property('value', function(){
+							return d3.select(this).property('id'); // 获取id属性的值
+						}); //设置文本的value属性为此元素的id值
+					d3.select('#d3_selection_property_checkbox_id')
+						.property('checked', true);  //设置复选框的checked属性
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_property()">试试看</button>
+		<br>
+		<input type="text" id="d3_selection_property_text_id" />
+		<br>
+		<input type="checkbox" id="d3_selection_property_checkbox_id" />
+		.property
+		<br>
+		<script type="text/javascript">
+			function d3_selection_property(){
+				d3.select('#d3_selection_property_text_id')
+					.property('value', function(){
+						return d3.select(this).property('id'); // 获取id属性的值
+					}); //设置文本的value属性为此元素的id值
+				d3.select('#d3_selection_property_checkbox_id')
+					.property('checked', true);  //设置复选框的checked属性
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_text">
+		<legend>selection.text([value])</legend>
+		<p>返回第一个非空元素的文本内容，或设置选择集中所有元素的文本内容为指定的值。</p>
+		<p>文本操作符基于textContent属性，设置文本内容将取代任何现有的子元素。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_text(){
+					d3.select('.d3_selection_text_p').text("selection.text([value])");  //设置元素的文本
+					d3.select('.d3_selection_text_p')
+						.text(function(){
+							return "new text: "+d3.select(this).text();
+						}); //设置元素的文本
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_text()">试试看</button>
+		<p class="d3_selection_text_p" style="border: 1px solid #333;"></p>
+		<script type="text/javascript">
+			function d3_selection_text(){
+				d3.select('.d3_selection_text_p').text("selection.text([value])");  //设置元素的文本
+				d3.select('.d3_selection_text_p')
+					.text(function(){
+						return "new text: "+d3.select(this).text();
+					}); //设置元素的文本
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_html">
+		<legend>selection.html([value])</legend>
+		<p>html操作符基于innerHTML属性，设置内部HTML的内容为value参数指定的值并取代任何已有的子元素。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_html(){
+					d3.select('.d3_selection_html_p').html('<h1>大家好！我是h1！</h1>'); //设置innerHTML的内容
+					d3.select('.d3_selection_html_p')
+						.html(function(d, i){
+							// 用函数设置innerHTML的内容
+							var old = d3.select(this).html(); // 获取innerHTML的内容
+							var newHTML = old + "<h2>大家好，我是h2！</h2>";
+							return newHTML;
+						});
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_html()">试试看</button>
+		<p class="d3_selection_html_p" style="border: 1px solid #333;"></p>
+		<script type="text/javascript">
+			function d3_selection_html(){
+				d3.select('.d3_selection_html_p').html('<h1>大家好！我是h1！</h1>'); //设置innerHTML的内容
+				d3.select('.d3_selection_html_p')
+					.html(function(d, i){
+						// 用函数设置innerHTML的内容
+						var old = d3.select(this).html(); // 获取innerHTML的内容
+						var newHTML = old + "<h2>大家好，我是h2！</h2>";
+						return newHTML;
+					});
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_append">
+		<legend>selection.append(name)</legend>
+		<p>在当前选择集的最后追加指定名称的子元素，返回的新选择集包含这个新追加的子元素。每个新元素都继承了元素集已绑定的数据。这个name参数可以被指定为一个常量字符串或一个函数，如果是函数的话，则返回追加的DOM元素。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_append(){
+					// 向id为d3_selection_append的标签追加子元素svg
+					var svg = d3.select('#d3_selection_append').append('svg');
+					// 向svg元素追加有svg命名空间的rect子元素
+					svg.append('svg: rect')
+						.attr({
+							'x': 10,
+							'y': 10,
+							'width': 100,
+							'height': 40,
+							'fill': 'orange'
+						});
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_append()">试试看</button>
+		<script type="text/javascript">
+			function d3_selection_append(){
+				// 向id为d3_selection_append的标签追加子元素svg
+				var svg = d3.select('#d3_selection_append').append('svg');
+				// 向svg元素追加有svg命名空间的rect子元素
+				svg.append('svg:rect')
+					.attr({
+						'x': 10,
+						'y': 10,
+						'width': 100,
+						'height': 120,
+						'fill': 'orange'
+					});
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_insert">
+		<legend>selection.insert(name[, before])</legend>
+		<p>如果指定了befoer参数，则在选择集中的before参数指定的元素前添加name参数指定的元素；如果未指定before参数或没有子元素匹配before参数，则直接使用selection.append的规则追加name参数指定的元素。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_insert(){
+					//插入SVG
+					var svg = d3.select('#d3_selection_insert').insert("svg");
+					//插入rect元素
+					svg.insert('svg:rect')
+						.attr({
+							'x': 10,
+							'y': 100,
+							'width': 100,
+							'height': 40,
+							'fill': 'forestgreen'
+						});
+					//在rect元素前插入circle元素
+					svg.insert('circle', 'rect')
+						.attr({
+							'cx': 60,
+							'cy': 75,
+							'r': 25,
+							'fill': 'slateblue'
+						});
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_insert()">试试看</button>
+		<script type="text/javascript">
+			function d3_selection_insert(){
+				//插入SVG
+				var svg = d3.select('#d3_selection_insert').insert("svg");
+				//插入rect元素
+				svg.insert('svg:rect')
+					.attr({
+						'x': 10,
+						'y': 100,
+						'width': 100,
+						'height': 40,
+						'fill': 'forestgreen'
+					});
+				//在rect元素前插入circle元素
+				svg.insert('circle', 'rect')
+					.attr({
+						'cx': 60,
+						'cy': 75,
+						'r': 25,
+						'fill': 'slateblue'
+					});
+			}
+		</script>
+	</fieldset>
+
+	<fieldset id="d3_selection_remove">
+		<legend>selection.remove()</legend>
+		<p>从当前文档删除选择中所有的元素，并将这些元素返回。</p>
+		<pre>
+			<code class="language-javascript">
+				function d3_selection_remove(){
+					//除掉黑块
+					var removed = d3.select('.d3_selection_remove_div').remove();
+					console.log(removed);
+				}
+			</code>
+		</pre>
+		<button onclick="d3_selection_remove()">试试看</button>
+		<div class="d3_selection_remove_div" style="width: 100px; height: 100px; background-color: #333;"></div>
+		<script type="text/javascript">
+			function d3_selection_remove(){
+				//除掉上面的黑块
+				var removed = d3.select('.d3_selection_remove_div').remove();
+				console.log(removed);
+			}
+		</script>
 	</fieldset>
 </div>
 </body>

@@ -40,6 +40,7 @@ fieldset{
 	border-style: solid;
 	border-width: 1px;
 	border-color: rgb(153, 153, 153);
+	margin-top: 10px;
 }
 
 fieldset legend{
@@ -73,4 +74,25 @@ fieldset table td{
 fieldset .d3_select_selector_table td.selected{
 	background-color: #ff5c00;
 	color: white;
+}
+
+#d3_selection_classed .even{
+	fill: purple;
+}
+
+#d3_selection_classed .odd{
+	fill: tomato;
+}
+
+#d3_selection_classed .stroke{
+	stroke: deepskyblue;
+	stroke-width: 5;
+}
+
+#d3_selection_classed .opacity{
+	opacity: 0.5;
+}
+
+button{
+	margin-bottom: 10px;
 }
