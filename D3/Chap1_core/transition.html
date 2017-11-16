@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>D3 transition</title>
+	<!-- D3 -->
+	<script type="text/javascript" src="../d3.min.js"></script>
+	<!-- hightlight code -->
+	<script type="text/javascript" src="../highlight/prism.js"></script>
+	<link rel="stylesheet" type="text/css" href="../highlight/prism.css" />
+	<!-- styles -->
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+</head>
+<body>
+	<div style="margin: 0 auto; width: 1200px;">
+		<caption>【Transition 过渡】</caption>
+		<table>
+			<tbody>
+				<tr class="name">
+					<th>选择器</th>
+					<th>含义</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_delay">transition.delay([delay])</a></th>
+					<th>指定过渡的延迟时间(ms)</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_duration">transition.duration([duration])</a></th>
+					<th>指定过渡选择中的每个元素的持续时间(ms)</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_ease">transition.ease([value[, arguments]])</a></th>
+					<th>指定过渡的缓动函数。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_attr">transition.attr(name, value)</a></th>
+					<th>设置指定名称的属性过渡结束时的值为value</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_attrTween">transition.attrTween(name, tween)</a></th>
+					<th>用指定的补间(tween)函数，过渡指定属性的值。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_style">transition.style(name, value[, priority])</a></th>
+					<th>设置指定名称的样式过渡结束时的值为value。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_styleTween">transition.styleTween(name, tween[, priority])</a></th>
+					<th>用指定的补间函数，过渡指定CSS样式的值。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_text">transition.text(value)</a></th>
+					<th>文本(text)操作符基于textContent属性。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_tween">transition.tween(name, factory)</a></th>
+					<th>给指定的名称（属性和样式名）注册一个自定义的补间函数。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_remove">transition.remove()</a></th>
+					<th>在过渡结束时删除选定的元素。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_select">transition.select(selector)</a></th>
+					<th>在当前过渡的每个元素中，选择与指定的选择字符串匹配的第一个子元素。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_selectAll">transition.selectAll(selector)</a></th>
+					<th>在当前过渡的每个元素中，选择与指定选择字符串匹配的所有子元素。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_filter">transition.filter(selector)</a></th>
+					<th>过滤过渡，返回一个新的过渡只包含与指定选择字符串匹配的元素。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_transition">transition.transition()</a></th>
+					<th>在同样的选中元素上创建一个新的过渡，在当前过渡结束后启动。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_each">transition.each([type, ]listerner)</a></th>
+					<th>如果指定了type参数，就为指定类型的过渡事件增加一个监听器。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_call">transition.call(function[, arguments...])</a></th>
+					<th>调用指定的函数一次，可传入一些可选的参数。</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
