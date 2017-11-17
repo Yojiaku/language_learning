@@ -12,9 +12,20 @@
 	<link rel="stylesheet" type="text/css" href="./styles.css" />
 </head>
 <body>
-	<div style="margin: 0 auto; width: 1200px;">
+	<div style="margin: 0 auto; width: 1200px; height: auto;">
 		<caption>【Transition 过渡】</caption>
-		<table>
+		<p>
+			过渡是一种特殊的选择。在选择上使用过渡操作符（transition）就可以开启一个过渡。过渡通常支持和选择器一样的操作符（attr和style），但不是所有的操作符都支持。
+			<br>
+			<pre style="color: red;">例如，必须在过渡开始前添加元素，移除操作符（remove）用于在过渡结束后移除元素。</pre>
+			过渡选择的每个元素可能都会延迟（delay）和持续（duration）时间。这便于交叉执行不同元素的过渡。
+			<br>
+			过渡是使用选择中的过渡操作符创建的。过渡在创建之后经过一段时间（默认为0）的延迟后自动启动。过渡的默认持续时间为250ms。
+			<hr>
+			【小提示】0延迟的过渡不是真的不延迟，事实上也要经过一段极小的延迟（大约17ms）后才开启，因为要等第一个定时器回调。
+			<hr>
+		</p>
+		<table style="margin: 0 auto;">
 			<tbody>
 				<tr class="name">
 					<th>选择器</th>
@@ -84,8 +95,974 @@
 					<th><a href="#transition_call">transition.call(function[, arguments...])</a></th>
 					<th>调用指定的函数一次，可传入一些可选的参数。</th>
 				</tr>
+				<tr>
+					<th><a href="#transition_empty">transition.empty()</a></th>
+					<th>如果当前过渡选择是空的，则返回true。过渡选择是空的，是指它不包含任何null元素。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_node">transition.node()</a></th>
+					<th>返回当前过渡选择的第一个非空元素。如果过渡为空，则返回null。</th>
+				</tr>
+				<tr>
+					<th><a href="#transition_size">transition.size()</a></th>
+					<th>返回当前过渡选择的元素总数。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_ease">d3.ease(type[, arguments...])</a></th>
+					<th>由指定的类型和可选参数返回一个内置的缓动函数。</th>
+				</tr>
+				<tr>
+					<th><a href="#ease">ease(t)</a></th>
+					<th>给定的参数时间t，通常在返回[0,1]内，返回对应的缓冲时间。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_timer">d3.timer(function[, delay[, time]])</a></th>
+					<th>启动一个自定义动画计时器，重复地调用指定的函数（function），直到它返回true。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolate">d3.interpolate(a, b)</a></th>
+					<th>返回一个介于a，b之间的默认插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#interpolate">interpolate(t)</a></th>
+					<th>对在区间[0,1]中一个给定的参数t，返回对应的插入值。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateNumber">d3.interpolateNumber(a, b)</a></th>
+					<th>返回一个a,b两个数字之间的数字插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateRound">d3.interpolateRound(a, b)</a></th>
+					<th>返回一个a，b两个数字之间的数字插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateString">d3.interpolateString(a, b)</a></th>
+					<th>返回一个a和b两个字符串之间的字符串插值器，字符串插值器会自动寻找嵌入在a和b里的数字。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateRgb">d3.interpolateRgb(a, b)</a></th>
+					<th>返回一个a和b两种颜色值之间的RGB颜色空间插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateHsl">d3.interpolateHsl(a, b)</a></th>
+					<th>返回一个a和b两种颜色之间的HSL颜色空间插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateLab">d3.interpolateLab(a, b)</a></th>
+					<th>返回一个a和b两种颜色之间的L*a*b颜色空间插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateHcl">d3.interpolateHcl(a, b)</a></th>
+					<th>返回一个a和b颜色之间的HCL颜色空间插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateArray">d3.interpolateArray(a, b)</a></th>
+					<th>返回一个在两个数组a和b之间的数组插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateObject">d3.interpolateObject(a, b)</a></th>
+					<th>返回一个介于a和b之间的对象插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateTransform">d3.interpolateTransform(a, b)</a></th>
+					<th>返回一个由a和b表示的二维仿射变换之间的插值器。</th>
+				</tr>
+				<tr>
+					<th><a href="#d3_interpolateZoom">d3.interpolateZoom(a, b)</a></th>
+					<th>返回一个介于两个二维平面视图a和b之间的平滑的插值器。</th>
+				</tr>
 			</tbody>
 		</table>
+
+		<fieldset id="transition_delay">
+			<legend>transition.delay([delay])</legend>
+			<p>
+			指定过渡的延迟时间（以ms为时间单位）。
+			<br>
+			参数delay：若是一个常量，则所有的元素将被赋予相同的延迟时间；若是一个函数，那么这个函数会为每个选中的元素（按顺序）计算延迟时间。
+			<br>
+			这个函数有两个参数：d代表当前元素已绑定的数据，i代表当前元素在元素集中的索引。在函数内部可以使用this引用当前元素。这个函数的返回值将被用来为每个元素设置延迟时间，默认的延迟是0.
+			<br>
+			如果没有指定delay参数，就返回过渡中第一个非空元素绑定的延迟时间。
+			<br>
+			设定延迟为索引i的倍数便于错开元素过渡。例如，根据元素的索引计算出的每个元素的过渡延迟值，就可以错开过渡，产生一个数据驱动的动画。如下代码：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_delay(){
+					//向#transition_delay增加svg子元素
+					var svg = d3.select('#transition_delay').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i = 0; i < 20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()  //开启动画
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.attr('transform', 'rotate(45)'); //设置动画结束时，rect元素顺时针旋转45度
+				}
+				</code>
+			</pre>
+			<button onclick="transition_delay()">试试看</button>
+			<script type="text/javascript">
+				function transition_delay(){
+					//向#transition_delay增加svg子元素
+					var svg = d3.select('#transition_delay').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i=0; i<20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.attr('transform', 'rotate(45)'); //设置动画结束时，rect元素顺时针旋转45度
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_duration">
+			<legend>transition.duration([duration])</legend>
+			<p>
+				指定过渡选择中的每个元素的持续时间（单位为ms）。
+				<br>
+				如果duration参数是常量，那么所有元素被赋予相同的持续时间；若duration参数为函数，那么这个函数会为每个选中的元素（按顺序）计算持续时间。
+				<br>
+				这个函数有两个参数：d代表当前元素已绑定的数据，i代表当前元素在元素集中的索引。在函数内部可使用this引用当前元素。该函数的返回值被用来设置每个元素的持续时间。默认持续时间为250ms。如果没有指定时间，则返回过渡中的第一个非空元素绑定的持续时间。
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_duration(){
+					//向#transition_duration增加svg子元素
+					var svg = d3.select('#transition_duration').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i = 0; i < 20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()   
+						.duration(1000)  //设置动画持续时间500ms
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.attr('transform', 'rotate(45)'); //设置动画结束时，rect元素顺时针旋转45度
+				}
+				</code>
+			</pre>
+			<button onclick="transition_duration()">试试看</button>
+			<script type="text/javascript">
+				function transition_duration(){
+					//向#transition_duration增加svg子元素
+					var svg = d3.select('#transition_duration').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i=0; i<20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()
+						.duration(1000)  //设置动画持续时间500ms
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.attr('transform', 'rotate(45)'); //设置动画结束时，rect元素顺时针旋转45度
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_ease">
+			<legend>transition.ease([value[, arguments]])</legend>
+			<p>
+				指定过渡的缓动函数。
+				<br>
+				如果value参数是一个函数，它被用于缓冲当前参数化的定时值t，t的值通常在[0,1]内（在过渡结束时，t可以稍大于1）；否则，value参数被传递给d3.ease方法来产生一个缓动函数。
+				<br>
+				默认的缓动函数是"cubic-in-out"。
+				<br>
+				<pre style="color: red;">
+				需要注意的是，不能为每个元素或每个属性定制缓动函数。如果未指定缓动函数，则返回绑定到过渡中的第一个非空元素的缓动函数。
+				</pre>
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_ease(){
+					var svg = d3.select('#transition_ease').append('svg').attr({
+						'width': '300px', 'height': '300px'
+					});
+					svg.append('circle').attr({
+						'cx': 100,
+						'cy': 100,
+						'r': 50,
+						'fill': 'tomato'
+					});
+					svg.selectAll('circle')
+						.transition()
+						.duration(1500)
+						.ease(d3.ease('elastic-out')) //动画的缓动函数为elastic-out
+						.attr('r', 100)  //设置动画结束时，圆的半径为100
+						.transition()
+						.duration(1500)
+						.ease(d3.ease('poly', 3)) //缓动函数转化为poly(3)等价于cubic
+						.attr('r', 50);
+				}
+				</code>
+			</pre>
+			<button onclick="transition_ease()">试试看</button>
+			<script type="text/javascript">
+				function transition_ease(){
+					var svg = d3.select('#transition_ease').append('svg').attr({
+						'width': '300px', 'height': '300px'
+					});
+					svg.append('circle').attr({
+						'cx': 100,
+						'cy': 100,
+						'r': 50,
+						'fill': 'tomato'
+					});
+					svg.selectAll('circle')
+						.transition()
+						.duration(1500)
+						.ease(d3.ease('elastic-out')) //动画的缓动函数为elastic-out
+						.attr('r', 100)  //设置动画结束时，圆的半径为100
+						.transition()
+						.duration(1500)
+						.ease(d3.ease('poly', 3)) //缓动函数转化为poly(3)等价于cubic
+						.attr('r', 50);
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_attr">
+			<legend>transition.attr(name, value)</legend>
+			<p>
+				设置指定名称的属性过渡结束时的值为value。
+				<br>
+				过渡的初始值是当前属性值（一定要事先设定一个初始值，如果不想发生意外错误的话），结束值为value参数指定的值。
+				<br>
+				如果value参数是常量，那么所有的元素将会过渡到相同的属性值。
+				如果value参数是函数，这个函数有两个参数：d为当前元素已绑定的数据，i为当前元素在元素集中的索引。在函数内可以用this引用当前元素。该函数的返回值被用于设置每个元素的属性值。<pre style="color: red;">不支持null值，因为这样的话，插值器将变成未定义的（undefined）。</pre>如果需要在过渡结束后移除元素，可以使用transition.remove()。
+				<br>
+				插值器基于终值自动选择。
+				<ul>
+					<li>如果终值是一个数字，则开始值被强制转换为一个数字，并使用<pre style="color: red;">interpolateNumber</pre>插值器。</li>
+					<li>如果终值是一个字符串，则会先检查该字符串是否代表一个颜色（如：/^(#|rgb\(|hsl\()/或CSS的明明颜色）。如果是，则初始值被强制转换为RGB颜色，并使用<pre style="color: red;">interpolateRgb</pre>插值器，否则使用<pre style="color: red">iinterpolateString</pre>插值器，在字符中插入数字。</li>
+				</ul>
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_attr(){
+					var svg = d3.select('#transition_attr').append('svg').attr({
+						'width':'300px','height':'300px'
+					});
+					svg.append('circle').attr({
+						'cx': 20,'xy': 20, 'r': 50, 'fill': 'tomato'
+					});
+					svg.selectAll('circle')
+						.transition()
+						.duration(1500)
+						.ease(d3.ease('bounce'))
+						.attr({
+							'r': 100, 'fill': 'skyblue'
+						});
+				}
+				</code>
+			</pre>
+			<button onclick="transition_attr()">试试看</button>
+			<script type="text/javascript">
+				function transition_attr(){
+					var svg = d3.select('#transition_attr').append('svg').attr({
+						'width':'300px','height':'300px'
+					});
+					svg.append('circle').attr({
+						'cx': 100,'cy': 100, 'r': 50, 'fill': 'tomato'
+					});
+					svg.selectAll('circle')
+						.transition()
+						.duration(1500)
+						.ease(d3.ease('bounce'))
+						.attr({
+							'r': 100, 'fill': 'skyblue'
+						});
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_attrTween">
+			<legend>transition.attrTween(name, tween)</legend>
+			<p>
+				用指定的补间（tween）函数，过渡指定属性的值。
+				<br>
+				过渡的开始和结束值由补间函数决定。补间函数在每个元素过渡开始的时候被调用。
+				<br>
+				这个函数有三个参数：
+				<ul>
+					<li>
+					d为当前元素已绑定的数据;
+					</li>
+					<li>
+					i为当前元素在元素集中的索引;
+					</li>
+					<li>
+					a代表当前属性的值。
+					</li>
+				</ul>
+				<br>
+				在函数内部可以使用this关键字引用当前元素，补间函数的返回值必须是一个插值器：
+				一个把定义域[0,1]内的某一值t映射为颜色、数字或者属性值的函数。
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_attrTween(){
+					var svg = d3.select('#transition_attrTween').append('svg').attr({'width':'300px','height':'300px'});
+					svg.append('circle').attr({'cx':100,'cy':100,'r':50});
+					svg.select('circle')
+						.transition()
+						.duration(1500)
+						.attrTween('r', tween); // 对半径属性调用自定义的补间函数
+					function tween(d, i, a){
+						//补间函数，设置半径从50过渡到100
+						return d3.interpolateNumber(a, 2*a);
+					}
+				}
+				</code>
+			</pre>
+			<button onclick="transition_attrTween()">试试看</button>
+			<script type="text/javascript">
+				function transition_attrTween(){
+					var svg = d3.select('#transition_attrTween').append('svg').attr({'width':'300px','height':'300px'});
+					svg.append('circle').attr({'cx':100,'cy':100,'r':50});
+					svg.select('circle')
+						.transition()
+						.duration(1500)
+						.attrTween('r', tween); // 对半径属性调用自定义的补间函数
+					function tween(d, i, a){
+						//补间函数，设置半径从50过渡到100
+						return d3.interpolateNumber(a, 2*a);
+					}
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_style">
+			<legend>transition.style(name, value[, priority])</legend>
+			<p>
+				设置指定名称的样式过渡结束时的值为value。
+				<br>
+				可选参数优先级（priority）也可以指定为null或者字符串‘important’（<pre style="color:red;display: inline-block;">不带感叹号</pre>）。
+				<br>
+				过渡的起始值是当前的样式属性值，终值是指定的value参数。
+				<br>
+				如果value参数是一个常数，那么所有的元素过渡结束时，都被设置为相同的样式属性值。
+				<br>
+				如果value参数是一个函数，那么这个函数会为每个选中的元素（按顺序）计算过渡结束时的样式值。这个函数有两个参数：d为当前元素已绑定的数据，i为当前元素在元素集中的索引。在函数内部可用this引用当前函数。函数的返回值之后被用来设置每个元素的样式属性值；不支持null，因为这样的话，插值器将是未定义的（undefined）。如果想在过渡之后移除元素，可以使用transition.remove()。
+				<br>
+				插值器同样基于终值自动选择。
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_style(){
+					var box = d3.select('#transition_style').append('div').style({
+						'width':'100px','height':'100px','background-color':'tomato'
+					});
+					box.transition().duration(1500).ease(d3.ease('bounce')).style('background-color', 'skyblue');
+				}
+				</code>
+			</pre>
+			<button onclick="transition_style()">试试看</button>
+			<script type="text/javascript">
+				function transition_style(){
+					var box = d3.select('#transition_style').append('div').style({
+						'width':'100px','height':'100px','background-color':'tomato'
+					});
+					box.transition().duration(1500).ease(d3.ease('bounce')).style('background-color', 'skyblue');
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_styleTween">
+			<legend>transition.styleTween(name, tween[, priority])</legend>
+			<p>
+				用指定的补间函数，过渡指定的CSS样式的值。
+				<br>
+				可选参数priority可以被指定为null或者字符串'important'。
+				<br>
+				过渡的起始和结束值由补间函数决定。补间函数在每个元素过渡开始的时候调用，这个函数可以传入的参数是：当前元素的绑定数据d，当前的索引i和需要设置的属性a。在函数内部可以用this引用当前元素。补间函数的返回值必须是一个插值器：函数将定义域[0,1]内某一值t映射为一个颜色、数字或属性值。
+				<br>
+				例如，用自定义的补间函数过渡div的背景色：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_styleTween(){
+					var box = d3.select('#transition_styleTween').append('div').style({
+						'width':'100px', 'height':'100px'
+					});
+					box.transition().duration(1500).styleTween('background-color', tween);
+					function tween(d, i, a){
+						return d3.interpolate('tomato', 'skyblue');
+					}
+				}
+				</code>
+			</pre>
+			<button onclick="transition_styleTween()">试试看</button>
+			<script type="text/javascript">
+				function transition_styleTween(){
+					var box = d3.select('#transition_styleTween').append('div').style({
+						'width':'100px', 'height':'100px'
+					});
+					box.transition().duration(1500).styleTween('background-color', tween);
+					function tween(d, i, a){
+						return d3.interpolate('tomato', 'skyblue');
+					}
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_text">
+			<legend>transition.text(value)</legend>
+			<p>
+				文本（Text）操作符是基于textContent属性的。设置文本内容将立刻取代任何现有的子元素。
+				<br>
+				在过渡开始时就会设置所有选定元素的文本内容为指定值。
+				<br>
+				如果value参数是一个函数，那么这个函数会为每个选中的元素（按顺序）计算过渡结束时的样式值。这个函数有两个参数：d为当前元素已绑定的数据，i为当前元素在元素集中的索引。在函数内部可用this引用当前函数。函数的返回值之后被用来设置每个元素的样式属性值；不支持null，因为这样的话，插值器将是未定义的（undefined）。如果想在过渡之后移除元素，可以使用transition.remove()。
+				<br>
+				例如，下面中将已有的文本内容'Haha'替换为'Oh, yeah!'
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_text(){
+					var test = d3.select('#transition_text').append('h4').text('Haha');
+					test.transition().duration(7500).text('Oh, yeah!');
+				}
+				</code>
+			</pre>
+			<button onclick="transition_text()">试试看</button>
+			<script type="text/javascript">
+				function transition_text(){
+					var test = d3.select('#transition_text').append('h4').text('Haha');
+					test.transition().duration(10000).text('Oh, yeah!');
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_tween">
+			<legend>transition.tween(name, factory)</legend>
+			<p>
+				给指定的名称（属性和样式名）注册一个自定义的补间函数。
+				<br>
+				当在过渡开始时，指定的factory函数将被过渡中每个选定的元素调用，这个函数有两个参数：d代表当前元素已绑定的数据，i为当前元素在元素集中的索引。在函数内部可以用this引用当前元素。factory函数应返回一个补间函数，补间函数在整个过渡过程中被反复调用。不减函数的参数t是当前标准化后的时间，在[0,1]区间内。如果factory函数返回null，则补间函数不会在选定元素上运行。
+				<br>
+				补间函数是用来内部实现attr和style补间的，并可以用来对其他文档元素进行差值。
+				<br>
+				例如，对一个文本内容为10的文本标签“< text >10</ text >”，使用自定义的补间函数将文本从10过渡到100：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_tween(){
+					//使用自定义补间函数过渡文本内容
+					d3.select('#transition_tween').append('textarea').text(10)
+						.transition()
+						.duration(7500)
+						.tween('text', function(){
+							//过渡区间为[10, 100]
+							var interpolate = d3.interpolate(d3.select(this).text(), 100);
+							return function(t){d3.select(this).text(interpolate(t));}
+						});
+				}
+				</code>
+			</pre>
+			<button onclick="transition_tween()">试试看</button>
+			<script type="text/javascript">
+				function transition_tween(){
+					//使用自定义补间函数过渡文本内容
+					d3.select('#transition_tween').append('textarea').text(10)
+						.transition()
+						.duration(7500)
+						.tween('text', function(){
+							//过渡区间为[10, 100]
+							var interpolate = d3.interpolate(d3.select(this).text(), 100);
+							return function(t){d3.select(this).text(interpolate(t));}
+						});
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_remove">
+			<legend>transition.remove()</legend>
+			<p>
+				在过渡结束时删除选定的元素。如果选定的元素有新的过渡计划，则元素不会被删除，但‘end’事件仍会被调度。
+			</p>
+			<pre>
+				<code class="language-javascript">
+					//在过渡结束后删除元素
+					svg.selectAll('circle')
+						.transition()  //开启动画
+						.duration(1500)  //设置动画持续事件1500ms
+						.attr('r', 0)  //设置动画结束时，circle元素的半径为0
+						.remove();  //在过渡结束后移除元素
+				</code>
+			</pre>
+		</fieldset>
+
+		<fieldset id="transition_select">
+			<legend>transition.select(selector)</legend>
+			<p>
+				在当前过渡的每个元素中，选择与指定的选择字符串匹配的第一个子元素。这个方法相当于
+				<pre style="background-color: gray; color: white;">
+					selection.select(selector).transition()
+				</pre>
+				其中，selection是当前过渡的隐含选择器。另外，返回的新过渡继承当前过渡的缓动方式、持续时间和延迟时间。
+				<br>
+				例如，分组（g）元素包含了两个矩形（rect）元素，为分组元素设置平移过渡，并在过渡选择中再选择矩形元素设置宽度过渡。这样第一个矩形元素就既会平移又会变宽。关键代码如下：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_select(){
+					var svg = d3.select('#transition_select')
+								.append('svg')
+								.attr({
+									"width": 200,
+									"height": 200,
+								});
+					//追加测试元素
+					svg.append('g').attr('transform', 'translate(0, 0)')
+						.selectAll('rect')
+						.data([50,250])
+						.enter()
+						.append('rect')
+						.attr({
+							x: function(d){ return d;}, y: 50, width: 50, height: 50
+						});
+					
+					//
+					svg.selectAll('g')
+						.transition()	//开启动画
+						.duration(500)	//设置动画持续时间500毫秒
+						.attr('transform', "translate(0, 50)")	//设置过渡结束时矩形向下平移50个像素
+						.select('rect')
+						.attr('width', 100);//设置矩形过渡结束后的宽为100
+				}
+				</code>
+			</pre>
+			<button onclick="transition_select()">试试看</button>
+			<script type="text/javascript">
+				function transition_select(){
+					var svg = d3.select('#transition_select')
+								.append('svg')
+								.attr({
+									"width": 200,
+									"height": 200,
+								});
+					//追加测试元素
+					svg.append('g').attr('transform', 'translate(0, 0)')
+						.selectAll('rect')
+						.data([50,250])
+						.enter()
+						.append('rect')
+						.attr({
+							x: function(d){ return d;}, y: 50, width: 50, height: 50
+						});
+					
+					//
+					svg.selectAll('g')
+						.transition()	//开启动画
+						.duration(500)	//设置动画持续时间500毫秒
+						.attr('transform', "translate(0, 50)")	//设置过渡结束时矩形向下平移50个像素
+						.select('rect')
+						.attr('width', 100);//设置矩形过渡结束后的宽为100
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_filter">
+			<legend>transition.filter(selector)</legend>
+			<p>
+				过滤过渡，返回一个新的过渡只包含与指定选择字符串匹配的元素。例如，设置动画结束时，索引为奇数的矩形元素顺时针旋转45°：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_filter(){
+					//向#transition_filter增加svg子元素
+					var svg = d3.select('#transition_filter').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i = 0; i < 20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()
+						.duration(1000)  //设置动画持续时间1000ms
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.filter(':nth-child(odd)')  //过滤奇元素
+						.attr('transform', 'rotate(45)'); //设置动画结束时，rect元素顺时针旋转45度
+				}
+				</code>
+			</pre>
+			<button onclick="transition_filter()">试试看</button>
+			<script type="text/javascript">
+				function transition_filter(){
+					//向#transition_filter增加svg子元素
+					var svg = d3.select('#transition_filter').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i=0; i<20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()
+						.duration(1000)  //设置动画持续时间1000ms
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.filter(':nth-child(odd)')  //过滤奇元素
+						.attr('transform', 'rotate(45)'); //设置动画结束时，rect元素顺时针旋转45度
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_transition">
+			<legend>transition.transition()</legend>
+			<p>
+				在同样的选中元素上创建一个新的过渡，在当前过渡结束后启动。
+				<br>
+				新的过渡继承当前过渡的持续时间和延迟时间。
+				<br>
+				这可以用来定义链式过渡，而无需监听过渡结束（end）事件。
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_transition(){
+					var svg = d3.select('#transition_transition').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i = 0; i < 20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()
+						.duration(1000)  //设置动画持续时间1000ms
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.filter(':nth-child(odd)')  //过滤奇元素
+						.attr('transform', 'rotate(45)')
+						.transition()
+						.duration(1000)
+						.attr('transform', 'rotate(10)');
+				}
+				</code>
+			</pre>
+			<button onclick="transition_transition()">试试看</button>
+			<script type="text/javascript">
+				function transition_transition(){
+					var svg = d3.select('#transition_transition').append('svg').attr({
+						'width': '320px','height': '300px'
+					});
+					//循环追加rect元素
+					for(var i = 0; i < 20; i++){
+						svg.append('rect')
+							.attr({
+								'x': 20+i*15,
+								'y': 10,
+								'width': 10,
+								'height': 10,
+								'fill': 'orange'
+							});
+					}
+					svg.selectAll('rect')
+						.transition()
+						.duration(1000)  //设置动画持续时间1000ms
+						.delay(function(d, i){
+							//设置延迟时间
+							return i*500;
+						})
+						.filter(':nth-child(odd)')  //过滤奇元素
+						.attr('transform', 'rotate(45)')
+						.transition()
+						.duration(1000)
+						.attr('transform', 'rotate(10)');
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_each">
+			<legend>transition.each([type, ]listener)</legend>
+			<p>
+				如果制定了type参数，就为指定类型的过渡事件增加一个监听器，支持的事件有'start'和'end'。监听器会被过渡中的每个元素调用。
+				<br>
+				start事件在过渡的第一个异步回调（tick）中被调用，先于任何补间函数。
+				<br>
+				end事件在过渡的最后一个异步回调（tick）中被调用，晚于所有补间函数。
+				<br>
+				如果没有指定type参数，则类似与selection.each函数：直接为当前过渡的每个元素调用指定的函数。
+			</p>
+			<pre>
+				<code class="language-javascript">
+				functioin transition_each(){
+					var svg = d3.select('#transition_each')
+								.append('svg')	
+								.attr({
+									"width": 300,
+									"height": 300,
+								});
+					//生成圆所需的坐标数据
+					dataset=[{"cx":80,"cy":50},{"cx":120,"cy":60},{"cx":160,"cy":90}]
+					
+					var color = d3.scale.category20();
+					//追加测试元素
+					svg.selectAll("ciecle")
+						.data(dataset)
+						.enter()
+						.append('circle')
+						.attr({
+							cx: function(d){return d.cx},
+							cy: function(d){return d.cy},
+							r: 5
+						});
+					//过渡开始前统一设置元素属性，结束后删除元素
+					svg.selectAll('circle')
+						.transition()	//开启过渡
+						.duration(1500)	//设置过渡持续时间1500毫秒
+						.attr({	
+							"opacity":0,"r":50
+						})
+						.each("start", function (d, i) {
+							d3.select(this).attr({
+								"fill": "none",
+								"stroke": color(i),
+								"stroke-width": 5,
+								"opacity":1
+							})
+						})
+						.each("end", function (d, i) {
+							d3.select(this).remove();
+						});
+				}
+				</code>
+			</pre>
+			<button onclick="transition_each()">试试看</button>
+			<script type="text/javascript">
+				function transition_each(){
+					var svg = d3.select('#transition_each')
+								.append('svg')	
+								.attr({
+									"width": 300,
+									"height": 300,
+								});
+					//生成圆所需的坐标数据
+					dataset=[{"cx":80,"cy":50},{"cx":120,"cy":60},{"cx":160,"cy":90}]
+					
+					var color = d3.scale.category20();
+					//追加测试元素
+					svg.selectAll("ciecle")
+						.data(dataset)
+						.enter()
+						.append('circle')
+						.attr({
+							cx: function(d){return d.cx},
+							cy: function(d){return d.cy},
+							r: 5
+						});
+					//过渡开始前统一设置元素属性，结束后删除元素
+					svg.selectAll('circle')
+						.transition()	//开启过渡
+						.duration(1500)	//设置过渡持续时间1500毫秒
+						.attr({	
+							"opacity":0,"r":50
+						})
+						.each("start", function (d, i) {
+							d3.select(this).attr({
+								"fill": "none",
+								"stroke": color(i),
+								"stroke-width": 5,
+								"opacity":1
+							})
+						})
+						.each("end", function (d, i) {
+							d3.select(this).remove();
+						});
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="transition_call">
+			<legend>transition.call(function[, arguments...])</legend>
+			<p>
+				调用指定的函数一次，可传入一些可选的参数。call操作符总是返回当前的过渡，并忽略指定函数的返回值。call操作符和手动执行一个函数是一样的，但是，它更易于使用方法链。
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function transition_call(){
+					var svg = d3.select('#transition_call')
+								.append('svg')	
+								.attr({
+									"width": 300,
+									"height": 300,
+								});
+					//生成圆所需的坐标数据
+					dataset=[{"cx":80,"cy":50},{"cx":120,"cy":60},{"cx":160,"cy":90}];
+					
+					//追加测试元素
+					svg.selectAll("ciecle")
+						.data(dataset)
+						.enter()
+						.append('circle')
+						.attr({
+							cx: function(d){return d.cx},
+							cy: function(d){return d.cy},
+							r: 5
+						});
+					
+					//设置动画结束时，rect元素的属性	
+					function setEndAttr(transition){
+						transition.attr({	
+							"opacity":0,"r":50
+						})
+					}
+					
+					//使用call函数调用可重用的属性设置函数
+					svg.selectAll('circle')
+						.transition()
+						.duration(1500)
+						.call(setEndAttr)	//调用setEndAttr函数设置元素属性
+						.each("start", function (d, i) {
+							d3.select(this).attr({
+								"fill": "none",
+								"stroke": "tomato",
+								"stroke-width": 5,
+								"opacity":1
+							})
+						})
+						.each("end", function (d, i) {
+							d3.select(this).remove();
+						});
+				}
+				</code>
+			</pre>
+			<button onclick="transition_call()">试试看</button>
+			<script type="text/javascript">
+				function transition_call(){
+					var svg = d3.select('#transition_call')
+								.append('svg')	
+								.attr({
+									"width": 300,
+									"height": 300,
+								});
+					//生成圆所需的坐标数据
+					dataset=[{"cx":80,"cy":50},{"cx":120,"cy":60},{"cx":160,"cy":90}];
+					
+					//追加测试元素
+					svg.selectAll("ciecle")
+						.data(dataset)
+						.enter()
+						.append('circle')
+						.attr({
+							cx: function(d){return d.cx},
+							cy: function(d){return d.cy},
+							r: 5
+						});
+					
+					//设置动画结束时，rect元素的属性	
+					function setEndAttr(transition){
+						transition.attr({	
+							"opacity":0,"r":50
+						})
+					}
+					
+					//使用call函数调用可重用的属性设置函数
+					svg.selectAll('circle')
+						.transition()
+						.duration(1500)
+						.call(setEndAttr)	//调用setEndAttr函数设置元素属性
+						.each("start", function (d, i) {
+							d3.select(this).attr({
+								"fill": "none",
+								"stroke": "tomato",
+								"stroke-width": 5,
+								"opacity":1
+							})
+						})
+						.each("end", function (d, i) {
+							d3.select(this).remove();
+						});
+				}
+			</script>
+		</fieldset>
+
+		<fieldset >
+			
+		</fieldset>
 	</div>
 </body>
 </html>
