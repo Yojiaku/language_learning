@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>D3-SVG shape</title>
+	<!-- D3 -->
+	<script type="text/javascript" src="../d3.min.js"></script>
+	<!-- hightlight code -->
+	<script type="text/javascript" src="../highlight/prism.js"></script>
+	<link rel="stylesheet" type="text/css" href="../highlight/prism.css" />
+	<!-- styles -->
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+</head>
+<body>
+	<div style="margin: 0 auto; width: 1200px;">
+		<caption>【SVG元素】</caption>
+		<p>
+			SVG是可缩放矢量图形的简称，SVG有大量内置的简单图形。所有的SVG形状都可以使用transform属性进行二维变换。
+			<br>
+			<pre style="color: red;">可以直接将变换应用到形状上，或者分组元素（g）中。</pre>
+			所以，当形状被定义为“轴对齐”时，仅仅意味着在此形状的局部坐标系中是轴对齐的。可以旋转、平移、缩放，还可使用fill和stroke指定填充或者描边。
+		</p>
+		<table style="margin: 0 auto;">
+			<tbody>
+				<tr class="name">
+					<th>形状Shape</th>
+					<th>描述Description</th>
+				</tr>
+				<tr>
+					<th><a href="#svg_rect">svg:rect x='0' y='0' width='0' height='0' rx='0' ry='0'</a></th>
+					<th>矩形元素定义一个轴对齐的矩形。</th>
+				</tr>
+				<tr>
+					<th><a href="#svg_circle">svg:circle cx='0' cy='0' r='0'</a></th>
+					<th>圆形元素定义了一个基于中心点和半径的圆形。</th>
+				</tr>
+				<tr>
+					<th><a href="#svg_text">svg:text x='0' y='0' dx='0' dy='0' text-anchor='start'</a></th>
+					<th>文本元素定义文本组成的图形元素。</th>
+				</tr>
+			</tbody>
+		</table>
+
+		<fieldset id="svg_rect">
+			<legend>svg:rect x='0' y='0' width='0' height='0' rx='0' ry='0'</legend>
+			<p>
+				矩形元素定义一个轴对齐的矩形。
+				<br>
+				矩形的左上角使用x,y属性定位，使用width和height指定尺寸。
+				<br>
+				圆角矩形可以使用可选参数rx和ry生成。
+				<br>
+				例如，给SVG元素添加一个带虚边的圆角矩形：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function svg_rect(){
+					var svg = d3.select('#svg_rect').append('svg').attr({'width': '250px', 'height':'250px'});
+					svg.append('rect')
+						.attr({
+							//rect左上角坐标（100,100）
+							'x': 100, 'y': 100,
+							//rect宽度：100
+							'width': 100,
+							//rect高度：50
+							'height': 50,
+							//rect水平圆角：5
+							'rx': 5,
+							//rect竖直圆角：10
+							'ry': 10
+						})
+						.style({
+							//rect边框颜色：red
+							'stroke': 'tomato',
+							//rect边框粗细：4
+							'stroke-width': 4,
+							//rect虚线边框虚线宽10px,空白宽5px
+							'stroke-dasharray': '10 5',
+							//rect填充：yellow
+							'fill': 'yellow'
+						});
+				}
+				</code>
+			</pre>
+			<button onclick="svg_rect()">试试看</button>
+			<script type="text/javascript">
+				function svg_rect(){
+					var svg = d3.select('#svg_rect').append('svg').attr({'width': '250px', 'height':'250px'});
+					svg.append('rect')
+						.attr({
+							//rect左上角坐标（100,100）
+							'x': 100, 'y': 100,
+							//rect宽度：100
+							'width': 100,
+							//rect高度：50
+							'height': 50,
+							//rect水平圆角：5
+							'rx': 5,
+							//rect竖直圆角：10
+							'ry': 10
+						})
+						.style({
+							//rect边框颜色：red
+							'stroke': 'tomato',
+							//rect边框粗细：4
+							'stroke-width': 4,
+							//rect虚线边框虚线宽10px,空白宽5px
+							'stroke-dasharray': '10 5',
+							//rect填充：yellow
+							'fill': 'yellow'
+						});
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="svg_circle">
+			<legend>svg:circle 'cx'=0 'cy'=0 'r'=0</legend>
+			<p>
+				圆形元素定义了一个基于中心点和半径的圆形。cx和cy属性指定圆圈的中心，r指定圆圈半径。
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function svg_circle(){
+					var svg = d3.select('#svg_circle').append('svg').attr({'width':'250px','height':'250px'});
+					svg.append('circle').attr({
+						//circle圆心（100,100）
+						'cx': 100, 'cy': 100,
+						//circle半径：50
+						'r': 50
+					})
+					.style({
+						'stroke': 'tomato', 'stroke-width': 5, 'fill': 'yellowgreen'
+					});
+				}
+				</code>
+			</pre>
+			<button onclick="svg_circle()">试试看</button>
+			<script type="text/javascript">
+				function svg_circle(){
+					var svg = d3.select('#svg_circle').append('svg').attr({'width':'250px','height':'250px'});
+					svg.append('circle').attr({
+						//circle圆心（100,100）
+						'cx': 100, 'cy': 100,
+						//circle半径：50
+						'r': 50
+					})
+					.style({
+						'stroke': 'tomato', 'stroke-width': 5, 'fill': 'yellowgreen'
+					});
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="svg_text">
+			<legend>svg:text x='0' y='0' dx='0' dy='0' text-anchor='start'</legend>
+			<p>
+				文本元素定义文本组成的图形元素。
+				<br>
+				文本元素的文本内容定义用来渲染的字符
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function svg_text(){
+					var svg = d3.select('#svg_text')
+								.append('svg')
+								.attr({
+									"width": 500,
+									"height": 500,
+								});
+			
+					var anchor=["start","middle","end"];
+					var fill=["none","tomato","aqua"];
+					var stoke=["red","none","blue"];
+					var writing_mode=["","tb",""];
+					var font_size=["100","60","100"];
+					
+					svg.selectAll("text").data(anchor).enter().append('text')
+						.attr({"x": 150, "y": function(d,i){ return 60+150*i;}}) 	//文本位置
+						.style({
+							"text-anchor": function(d){return d;},	//文本对齐方式
+							"font-size": function(d,i){return font_size[i];},	//文本字体大小
+							"writing-mode": function(d,i){return writing_mode[i];},	//文本书写格式
+							"stroke": function(d,i){return stoke[i];},	//文本描边色
+							"fill": function(d,i){return fill[i];}  //文本填充色
+							})
+						.text(function(d){return d;});	//文本内容
+				}
+				</code>
+			</pre>
+			<button onclick="svg_text()">试试看</button>
+			<script type="text/javascript">
+				function svg_text(){
+					var svg = d3.select('#svg_text')
+								.append('svg')
+								.attr({
+									"width": 500,
+									"height": 500,
+								});
+			
+					var anchor=["start","middle","end"];
+					var fill=["none","tomato","aqua"];
+					var stoke=["red","none","blue"];
+					var writing_mode=["","tb",""];
+					var font_size=["100","60","100"];
+					
+					svg.selectAll("text").data(anchor).enter().append('text')
+						.attr({"x": 150, "y": function(d,i){ return 60+150*i;}}) 	//文本位置
+						.style({
+							"text-anchor": function(d){return d;},	//文本对齐方式
+							"font-size": function(d,i){return font_size[i];},	//文本字体大小
+							"writing-mode": function(d,i){return writing_mode[i];},	//文本书写格式
+							"stroke": function(d,i){return stoke[i];},	//文本描边色
+							"fill": function(d,i){return fill[i];}  //文本填充色
+							})
+						.text(function(d){return d;});	//文本内容
+				}
+			</script>
+		</fieldset>
+	</div>
+</body>
+</html>
