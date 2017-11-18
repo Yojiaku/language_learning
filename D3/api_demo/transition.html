@@ -96,15 +96,15 @@
 					<th>调用指定的函数一次，可传入一些可选的参数。</th>
 				</tr>
 				<tr>
-					<th><a href="#transition_empty">transition.empty()</a></th>
+					<th>transition.empty()</th>
 					<th>如果当前过渡选择是空的，则返回true。过渡选择是空的，是指它不包含任何null元素。</th>
 				</tr>
 				<tr>
-					<th><a href="#transition_node">transition.node()</a></th>
+					<th>transition.node()</th>
 					<th>返回当前过渡选择的第一个非空元素。如果过渡为空，则返回null。</th>
 				</tr>
 				<tr>
-					<th><a href="#transition_size">transition.size()</a></th>
+					<th>transition.size()</th>
 					<th>返回当前过渡选择的元素总数。</th>
 				</tr>
 				<tr>
@@ -124,47 +124,47 @@
 					<th>返回一个介于a，b之间的默认插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#interpolate">interpolate(t)</a></th>
+					<th>interpolate(t)</th>
 					<th>对在区间[0,1]中一个给定的参数t，返回对应的插入值。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateNumber">d3.interpolateNumber(a, b)</a></th>
+					<th>d3.interpolateNumber(a, b)</th>
 					<th>返回一个a,b两个数字之间的数字插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateRound">d3.interpolateRound(a, b)</a></th>
+					<th>d3.interpolateRound(a, b)</th>
 					<th>返回一个a，b两个数字之间的数字插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateString">d3.interpolateString(a, b)</a></th>
+					<th>d3.interpolateString(a, b)</th>
 					<th>返回一个a和b两个字符串之间的字符串插值器，字符串插值器会自动寻找嵌入在a和b里的数字。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateRgb">d3.interpolateRgb(a, b)</a></th>
+					<th>d3.interpolateRgb(a, b)</th>
 					<th>返回一个a和b两种颜色值之间的RGB颜色空间插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateHsl">d3.interpolateHsl(a, b)</a></th>
+					<th>d3.interpolateHsl(a, b)</th>
 					<th>返回一个a和b两种颜色之间的HSL颜色空间插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateLab">d3.interpolateLab(a, b)</a></th>
+					<th>d3.interpolateLab(a, b)</th>
 					<th>返回一个a和b两种颜色之间的L*a*b颜色空间插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateHcl">d3.interpolateHcl(a, b)</a></th>
+					<th>d3.interpolateHcl(a, b)</th>
 					<th>返回一个a和b颜色之间的HCL颜色空间插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateArray">d3.interpolateArray(a, b)</a></th>
+					<th>d3.interpolateArray(a, b)</th>
 					<th>返回一个在两个数组a和b之间的数组插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateObject">d3.interpolateObject(a, b)</a></th>
+					<th>d3.interpolateObject(a, b)</th>
 					<th>返回一个介于a和b之间的对象插值器。</th>
 				</tr>
 				<tr>
-					<th><a href="#d3_interpolateTransform">d3.interpolateTransform(a, b)</a></th>
+					<th>d3.interpolateTransform(a, b)</th>
 					<th>返回一个由a和b表示的二维仿射变换之间的插值器。</th>
 				</tr>
 				<tr>
@@ -1060,8 +1060,304 @@
 			</script>
 		</fieldset>
 
-		<fieldset >
-			
+		<fieldset id="d3_ease">
+			<legend>d3.ease(type[, arguments...])</legend>
+			<p>
+				由指定的类型type和可选参数arguments返回一个内置的缓动函数。
+				<br>
+				缓动函数将当前参数化的时间值t从定义域[0,1]映射为一个相似值域（可能稍微超过[0,1]）中的值。
+				<br>
+				这个函数经常用来设置过渡的缓动方式，type参数指定缓动函数的类型，可选的arguments参数为若指定的缓动函数带有参数时传入的值。
+				<br>
+				D3支持的缓动类型如下表所示：
+			</p>
+			<table style="margin: 1 auto;">
+				<tbody>
+					<tr class="name">
+						<th>缓动类型type</th>
+						<th>描述description</th>
+					</tr>
+					<tr>
+						<th>linear</th>
+						<th>恒等函数（线性变换）</th>
+					</tr>
+					<tr>
+						<th>poly(k)</th>
+						<th>t的k次方</th>
+					</tr>
+					<tr>
+						<th>quad</th>
+						<th>t的平方，等价于poly(2)</th>
+					</tr>
+					<tr>
+						<th>cubic</th>
+						<th>t的立方，等价于poly(3)</th>
+					</tr>
+					<tr>
+						<th>sin</th>
+						<th>正弦三角函数</th>
+					</tr>
+					<tr>
+						<th>exp</th>
+						<th>2的t次方</th>
+					</tr>
+					<tr>
+						<th>circle</th>
+						<th>四分之一圆周</th>
+					</tr>
+					<tr>
+						<th>elastic(a,p)</th>
+						<th>模拟一个橡皮筋，略有延长可能会超出0~1区间</th>
+					</tr>
+					<tr>
+						<th>back(s)</th>
+						<th>模拟回到一个停车位</th>
+					</tr>
+					<tr>
+						<th>bounce</th>
+						<th>模拟一个弹性碰撞</th>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				这些内置的缓动类型可以采用下标的方式进行扩展：
+			</p>
+			<table style="margin: 1 auto;">
+				<tbody>
+					<tr class="name">
+						<th>缓动扩展方式</th>
+						<th>描述Description</th>
+					</tr>
+					<tr>
+						<th>in</th>
+						<th>恒等函数</th>
+					</tr>
+					<tr>
+						<th>out</th>
+						<th>反转函数，反转缓动区间为[1,0]</th>
+					</tr>
+					<tr>
+						<th>in-out</th>
+						<th>从[0,0.5]和[0.5,1]区间复制和镜像缓动函数</th>
+					</tr>
+					<tr>
+						<th>out-in</th>
+						<th>从[1,0.5]和[0.5,0]区间复制和镜像缓动函数</th>
+					</tr>
+				</tbody>
+			</table>
+			<p>默认的缓动函数是"cubic-in-out"，它提供了适合的慢入/慢出动画。下面是一个使用bounce动画的例子：</p>
+			<pre>
+				<code class="language-javascript">
+				function d3_ease(){
+					d3.select('#d3_ease').
+						append('svg').
+						attr({'width':'100px','height':'100px'}).
+						append('circle').
+						attr({'r':50,'fill':'tomato'}).
+						transition().
+						duration(1500).
+						ease(d3.ease('bounce')).
+						attr('r','100');
+				}
+				</code>
+			</pre>
+			<button onclick="d3_ease()">试试看</button>
+			<script type="text/javascript">
+				function d3_ease(){
+					d3.select('#d3_ease').append('svg').attr({'width':'100px','height':'100px'}).append('circle').attr({'r':50,'fill':'tomato'}).transition().duration(1500).ease(d3.ease('bounce')).attr('r','100');
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="ease">
+			<legend>ease(t)</legend>
+			<p>
+				给定的参数时间t，通常在范围[0,1]内，返回对应的缓冲时间。
+				<br>
+				返回的值通常在范围[0,1]内，但对于某些缓动函数也可以超出这个范围，比如弹性缓动函数（elastic）就可稍微延伸。
+			</p>
+		</fieldset>
+
+		<fieldset id="d3_timer">
+			<legend>d3.timer(function[, delay[, time]])</legend>
+			<p>
+				启动一个自定义动画计时器，重复地调用指定的函数（function），直到它返回true。
+				<br>
+				计时器启动后没有办法取消，所以一定要确保完成时function参数返回true。
+				<br>
+				如果要在一段延迟之后调用给定函数，则需要指定可选参数ddelay的值（以ms为单位）。延时是相对于指定的time参数的（从UNIX纪元开始的时间）。time参数表示计时器在什么时候调用指定的函数，如果没有指定time参数，则默认为Date.now()。
+				<br>
+				可以使用延迟参数delay和时间参数time来指定函数function被调用的相对时间和绝对时间；例如，下面的代码的含义是在延迟4秒后执行notify函数动态改变文本的内容为0~100的数字
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function d3_timer(){
+					var svg = d3.select('#d3_timer').append('svg').attr({'width':'100px','height':'100px'});
+					svg.append('text').attr({'x':'100','y':'100'}); 
+
+					d3.timer(notify, 4*1000, Date.now());
+
+					var i=0;
+					function notify(d){
+						svg.select('text').text(i);
+						return i++ >= 100;
+					}
+				}
+				</code>
+			</pre>
+			<button onclick="d3_timer()">试试看</button>
+			<script type="text/javascript">
+				function d3_timer(){
+					var svg = d3.select('#d3_timer').append('svg').attr({'width':'100px','height':'100px'});
+					svg.append('text').attr({'x':'50','y':'50'});  
+					d3.timer(notify, 4*1000, Date.now());
+					var i=0;
+					function notify(d){
+						svg.select('text').text(i);
+						console.log(i);
+						return i++ >= 100;
+					}
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="d3_interpolate">
+			<legend>d3.interpolate(a, b)</legend>
+			<p>
+				返回一个介于a和b之间的默认插值器。插值器的类型基于第二个参数b的类型，使用以下规则确定：
+				<ul>
+					<li>如果b是颜色（color）类型，则返回interpolateRgb插值器；</li>
+					<li>如果b是字符串（string）类型，则返回interpolateString插值器；</li>
+					<li>如果b是数组（Array）类型，则返回interpolateArray插值器；</li>
+					<li>如果b是对象（object）类型，且不能强制转换为数字类型，则返回interpolateObject插值器；</li>
+					<li>否则，返回interpolateNumber插值器。</li>
+				</ul>
+				基于选定的插值器，a将被强制转换为一个适当的对应类型。颜色检查适用于d3.rgb对象及其他颜色空间对象，以及/^(#|rgb\(|hsl\()/形式的颜色字符串或CSS命名颜色。
+				<br>
+				例如，自定义一个值域为绿色到橘黄色的插值器在过渡过程中插入圆的填充颜色：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function d3_interpolate(){
+					var svg = d3.select('#d3_interpolate').append('svg').attr({'width':'200px','height':'200px'});
+					svg.append('circle').attr({'cx':'100','cy':'100','r':'20'});
+					svg.select('circle')
+						.transition()
+						.duration(2000)
+						.styleTween('fill', function(d, i, value){
+							return d3.interpolate('green', 'orange');
+						});
+				}
+				</code>
+			</pre>
+			<button onclick="d3_interpolate()">试试看</button>
+			<script type="text/javascript">
+				function d3_interpolate(){
+					var svg = d3.select('#d3_interpolate').append('svg').attr({'width':'200px','height':'200px'});
+					svg.append('circle').attr({'cx':'100','cy':'100','r':'20'});
+					svg.select('circle')
+						.transition()
+						.duration(2000)
+						.styleTween('fill', function(d, i, value){
+							return d3.interpolate('green', 'orange');
+						});
+				}
+			</script>
+		</fieldset>
+
+		<fieldset id="d3_interpolateZoom">
+			<legend>d3.interpolateZoom(a, b)</legend>
+			<p>
+				返回一个介于两个二维平面视图a和b之间的平滑的插值器。
+				<br>
+				每个视图是由三个数字构成的数组：cx, cy, width。其中cx、cy代表视口（viewport）的中心；参数width表示视口（viewport）的大小。
+				<br>
+				返回的插值器还有一个持续时间（duration）属性，表示推荐的过渡持续时间（以ms为单位）。
+				<br>
+				下面表示置于SVG右下角大小为10*10像素的圆环平移到SVG中心，并放大为200*200像素的功能：
+			</p>
+			<pre>
+				<code class="language-javascript">
+				function d3_interpolateZoom(){
+					var size = 200, radius = 10;
+					var center = [size/2, size/2]; //SVG中心
+					var view1 = [size/2, size/2, size], view2 = [size-radius, size-radius, 2*radius];
+					//生成SVG
+					var svg = d3.select('#d3_interpolateZoom')
+								.append('svg')
+								.attr({
+									'width':size,
+									'height':size
+								})
+								.append('g');
+					//追加测试圆
+					svg.append('circle')
+						.attr({
+							'fill':'none',
+							'stroke':'tomato',
+							'stroke-width':'2',
+							'cx':size-radius,
+							'cy':size-radius,
+							'r':radius-1
+						});
+					//定义缩放插值器
+					var interZoom = d3.interpolateZoom(view1, view2);
+					svg.transition()
+						.delay(size/2)
+						.duration(interZoom.duration)  //返回的插值器中推荐的过渡持续时间
+						.attrTween('transform', function(){
+							return function(t){
+								//t为标准化后的时间
+								var point = interZoom(t); //一个三元素数组，描述插入的师徒
+								console.log(point);
+								var scale = size/point[2]; //计算缩放倍数
+								return 'translate(' + (center[0] - point[0]*scale)+','+(center[1]-point[1]*scale)+')scale('+scale+')'; //将圆平移到svg中心，并放大相对于svg的缩放倍数
+							};
+						});
+				}
+				</code>
+			</pre>
+			<button onclick="d3_interpolateZoom()">试试看</button>
+			<script type="text/javascript">
+				function d3_interpolateZoom(){
+					var size = 200, radius = 10;
+					var center = [size/2, size/2]; //SVG中心
+					var view1 = [size/2, size/2, size], view2 = [size-radius, size-radius, 2*radius];
+					//生成SVG
+					var svg = d3.select('#d3_interpolateZoom')
+								.append('svg')
+								.attr({
+									'width':size,
+									'height':size
+								})
+								.append('g');
+					//追加测试圆
+					svg.append('circle')
+						.attr({
+							'fill':'none',
+							'stroke':'tomato',
+							'stroke-width':'2',
+							'cx':size-radius,
+							'cy':size-radius,
+							'r':radius-1
+						});
+					//定义缩放插值器
+					var interZoom = d3.interpolateZoom(view1, view2);
+					svg.transition()
+						.delay(size/2)
+						.duration(interZoom.duration)  //返回的插值器中推荐的过渡持续时间
+						.attrTween('transform', function(){
+							return function(t){
+								//t为标准化后的时间
+								var point = interZoom(t); //一个三元素数组，描述插入的师徒
+								console.log(point);
+								var scale = size/point[2]; //计算缩放倍数
+								return 'translate(' + (center[0] - point[0]*scale)+','+(center[1]-point[1]*scale)+')scale('+scale+')'; //将圆平移到svg中心，并放大相对于svg的缩放倍数
+							};
+						});
+				}
+			</script>
 		</fieldset>
 	</div>
 </body>
