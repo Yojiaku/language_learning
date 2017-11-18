@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>D3-scale</title>
+	<!-- D3 -->
+	<script type="text/javascript" src="../d3.min.js"></script>
+	<!-- hightlight code -->
+	<script type="text/javascript" src="../highlight/prism.js"></script>
+	<link rel="stylesheet" type="text/css" href="../highlight/prism.css" />
+	<!-- styles -->
+	<link rel="stylesheet" type="text/css" href="./styles.css" />
+	<style type="text/css">
+		.axis path, .axis line{
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+		}
+	</style>
+</head>
+<body>
+	<div style="margin: 0 auto; width: 1200px;">
+		<caption>【比例尺 scale】</caption>
+		<p>
+			比例尺是一个函数，用来将定义域内的值域映射为值域的值。
+			<br>
+			比例尺主要有 序数比例尺、数值比例尺和时间比例尺。
+			<ul>
+				<li>序数比例尺的定义域是离散的，诸如一组名称或类别。</li>
+				<li>数值比例尺的定义域是连续的，如实数集。</li>
+				<li>时间比例尺的定义域为时间。</li>
+			</ul>	
+			比例尺对象的返回值既是一个对象也是一个函数。像D3中的其他类，比例尺遵循链式语法：setter方法直接返回比例尺本身，允许在一个简洁的语句中调用多个setter方法。		
+		</p>
+		<hr>
+		<caption>【线性比例尺】</caption>
+		<p>
+			线性比例尺是最常见的比例尺，值域值y可以表示为定义域值x的线性函数：y = mx + b。
+			<br>
+			下面是一个使用默认的比例尺绘制的条形图:
+		</p>
+		<pre>
+			<code class="language-javascript">
+			function lineScale(){
+				// svg 尺寸
+				var margin = {'top':20, 'right': 20, 'bottom': 20, 'left': 20};
+				var width = 500 - margin.left - margin.right;
+				var height = 500 - margin.top - margin.bottom;
+				// 条宽
+				var barWidth = 8;
+				// 数据集
+				var dataset = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				// 默认线性比例尺
+				var linearScale = d3.scale.linear();
+				// 创建SVG标签
+				var svg = d3.select('.linear').append('svg')
+							.attr('width', width+margin.left+margin.right)
+							.attr('height', height+margin.top+margin.bottom)
+							.append('g')
+							.attr('transform', 'translate('+0+','+margin.top+')');
+				// 创建矩形条
+				var rects = svg.selectAll('rect')
+								.data(dataset)
+								.enter()
+								.append('rect')
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);},  //矩形起始纵坐标
+									'width': function(d){return barWidth;},
+									'height': function(d){return linearScale(d);}, //矩形的条高
+									'fill': function(d){return 'steelblue';},
+									'stroke':'black',
+									'stroke-width': .5
+								});
+				// 创建矩形条的文本
+				var texts = svg.selectAll('text')
+								.data(dataset)
+								.enter()
+								.append('text')
+								.text(function(d){return linearScale(d);})
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);}
+								});
+				// 创建坐标轴
+				svg.append('g')
+					.attr('transform', 'translate('+margin.left+','+height+')')
+					.attr('class', 'x axis')
+					.call(d3.svg.axis().scale(d3.scale.linear().domain([0, d3.max(dataset)]).range([0, height])).orient('bottom'));
+			}
+			</code>
+		</pre>
+		<button onclick="lineScale()">试试看</button>
+		<div class="linear"></div>
+		<script type="text/javascript">
+			function lineScale(){
+				// svg 尺寸
+				var margin = {'top':20, 'right': 20, 'bottom': 20, 'left': 20};
+				var width = 500 - margin.left - margin.right;
+				var height = 500 - margin.top - margin.bottom;
+				// 条宽
+				var barWidth = 8;
+				// 数据集
+				var dataset = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				// 默认线性比例尺
+				var linearScale = d3.scale.linear();
+				// 创建SVG标签
+				var svg = d3.select('.linear').append('svg')
+							.attr('width', width+margin.left+margin.right)
+							.attr('height', height+margin.top+margin.bottom)
+							.append('g')
+							.attr('transform', 'translate('+0+','+margin.top+')');
+				// 创建矩形条
+				var rects = svg.selectAll('rect')
+								.data(dataset)
+								.enter()
+								.append('rect')
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);},  //矩形起始纵坐标
+									'width': function(d){return barWidth;},
+									'height': function(d){return linearScale(d);}, //矩形的条高
+									'fill': function(d){return 'steelblue';},
+									'stroke':'black',
+									'stroke-width': .5
+								});
+				// 创建矩形条的文本
+				var texts = svg.selectAll('text')
+								.data(dataset)
+								.enter()
+								.append('text')
+								.text(function(d){return linearScale(d);})
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);}
+								});
+				// 创建坐标轴
+				svg.append('g')
+					.attr('transform', 'translate('+margin.left+','+height+')')
+					.attr('class', 'x axis')
+					.call(d3.svg.axis().scale(d3.scale.linear().domain([0, d3.max(dataset)]).range([0, height])).orient('bottom'));
+			}
+		</script>
+		<table style="margin: 0 auto;">
+			<tbody>
+				<tr class="name">
+					<th>选择器</th>
+					<th>含义</th>
+				</tr>
+				<tr>
+					<th>d3.scale.linear()</th>
+					<th>构造一个新的比例尺，默认定义域和值域都是[0,1]。因此，默认比例尺相当于数字恒等函数：
+					<pre style="color: red;">var linearScale = d3.scale.linear(); // 默认线性比例尺</pre>
+					</th>
+				</tr>
+				<tr>
+					<th>linear.invert(y)</th>
+					<th>
+						为值域中的值y返回定义域相应的值x。它代表了值域到定义域逆映射。在值域的有效值y，linear(linear.invert(y))等于y。类似地，在定义域中的有效数值x，linear.invert(linear(x))等于x。
+						<pre>
+							<code class="language-javascript">
+								var linearScale = d3.scale.linear().domain([0, 10]).range([0, 100]);
+								linearScale(3); //返回30
+								linearScale.invert(30); //返回3
+							</code>
+						</pre>
+					</th>
+				</tr>
+				<tr>
+					<th>linear.domain([numbers])</th>
+					<th>如果指定了参数numbers，则设置比例尺的定义域为指定的numbers数组。数组必须包含两个或两个以上的数字。如果给定的数组中的元素不是数字，它们将被强制转换为数字；这种强制转换在比例尺被调用时发生。因此，线性比例尺可用于强制类型转换，如日期对象可以被转换为数字。但是，通常对于日期用d3.time.scale更方便。如果未指定参数numbers，则返回比例尺当前的定义域。</th>
+				</tr>
+				<tr>
+					<th><a href="#linear_range">linear.range([values])</a></th>
+					<th>如果指定了values数组，则设置比例尺的值域为values数组。数组必须包含两个或多个值，以匹配定义域的奇数，否则两者较长的一个被截断以匹配另一个。</th>
+				</tr>
+				<tr>
+					<th><a href="#linear_rangeRound">linear.rangeRound(values)</a></th>
+					<th>用指定的values数组设置比例尺的值域，而比例尺的插值器也设置为d3.interpolateRound。</th>
+				</tr>
+			</tbody>
+		</table>
+
+		<fieldset id="linear_range">
+			<legend>linear.range([values])</legend>
+			<p>
+				如果指定了values数组，则设置比例尺的值域为values数组。数组必须包含两个或多个值，以匹配定义域的奇数，否则两者较长的一个被截断以匹配另一个。
+				<br>
+				给定数组中的元素不必是数字，底层的插值器支持任何的值。但是，反转（invert）操作符中值域必须是数字。如果未指定values，则返回当前比例尺的值域。
+			</p>
+			<pre>
+				<code class="language-javascript">
+			function linear_range(){
+				// svg 尺寸
+				var margin = {'top':20, 'right': 20, 'bottom': 20, 'left': 20};
+				var width = 500 - margin.left - margin.right;
+				var height = 500 - margin.top - margin.bottom;
+				// 条宽
+				var barWidth = 8;
+				// 数据集
+				var dataset = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				// 线性比例尺
+				var linearScale = d3.scale.linear()
+										.domain([0, d3.max(dataset)])  //比例尺定义域范围（x坐标轴）
+										.range([0, height]);  //比例尺值域为0到SVG画布的高度(y坐标轴)
+				// 创建SVG标签
+				var svg = d3.select('#linear_range').append('svg')
+							.attr('width', width+margin.left+margin.right)
+							.attr('height', height+margin.top+margin.bottom)
+							.append('g')
+							.attr('transform', 'translate('+0+','+margin.top+')');
+				// 创建矩形条
+				var rects = svg.selectAll('rect')
+								.data(dataset)
+								.enter()
+								.append('rect')
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);},  //矩形起始纵坐标
+									'width': function(d){return barWidth;},
+									'height': function(d){return linearScale(d);}, //矩形的条高
+									'fill': function(d){return 'steelblue';},
+									'stroke':'black',
+									'stroke-width': .5
+								});
+				// 创建矩形条的文本
+				var texts = svg.selectAll('text')
+								.data(dataset)
+								.enter()
+								.append('text')
+								.text(function(d){return linearScale(d);})
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);}
+								});
+				// 创建坐标轴
+				svg.append('g')
+					.attr('transform', 'translate('+margin.left+','+height+')')
+					.attr('class', 'x axis')
+					.call(d3.svg.axis().scale(d3.scale.linear().domain([0, d3.max(dataset)]).range([0, height])).orient('bottom'));
+			}
+				</code>
+			</pre>
+			<button onclick="linear_range()">试试看</button>
+			<script type="text/javascript">
+			function linear_range(){
+				// svg 尺寸
+				var margin = {'top':20, 'right': 20, 'bottom': 20, 'left': 20};
+				var width = 500 - margin.left - margin.right;
+				var height = 500 - margin.top - margin.bottom;
+				// 条宽
+				var barWidth = 8;
+				// 数据集
+				var dataset = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+				// 线性比例尺
+				var linearScale = d3.scale.linear()
+										.domain([0, d3.max(dataset)])  //比例尺定义域范围（x坐标轴）
+										.range([0, height]);  //比例尺值域为0到SVG画布的高度(y坐标轴)
+				// 创建SVG标签
+				var svg = d3.select('#linear_range').append('svg')
+							.attr('width', width+margin.left+margin.right)
+							.attr('height', height+margin.top+margin.bottom)
+							.append('g')
+							.attr('transform', 'translate('+0+','+margin.top+')');
+				// 创建矩形条
+				var rects = svg.selectAll('rect')
+								.data(dataset)
+								.enter()
+								.append('rect')
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);},  //矩形起始纵坐标
+									'width': function(d){return barWidth;},
+									'height': function(d){return linearScale(d);}, //矩形的条高
+									'fill': function(d){return 'steelblue';},
+									'stroke':'black',
+									'stroke-width': .5
+								});
+				// 创建矩形条的文本
+				var texts = svg.selectAll('text')
+								.data(dataset)
+								.enter()
+								.append('text')
+								.text(function(d){return linearScale(d);})
+								.attr({
+									'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+									'y': function(d, i){return height-linearScale(d);}
+								});
+				// 创建坐标轴
+				svg.append('g')
+					.attr('transform', 'translate('+margin.left+','+height+')')
+					.attr('class', 'x axis')
+					.call(d3.svg.axis().scale(d3.scale.linear().domain([0, d3.max(dataset)]).range([0, height])).orient('bottom'));
+			}
+			</script>
+		</fieldset>
+
+		<fieldset id="linear_rangeRound">
+			<legend>linear.rangeRound(values)</legend>
+			<p>
+				用指定的values数组设置比例尺的值域，而比例尺的插值器也设置为d3.interpolateRound。
+				这样比例尺的输出值都是一个个精确的整数。
+				<br>
+				例如：若更换基础案例中的数据集为
+				<pre style="color: red;">var dataset = [1.02, 2.02, 3.02, 4.02, 5.02, 6.02, 7.02, 8.02, 9.02, 10.02];</pre>
+				再使用下面的比例尺：
+				<br>
+				var linearScale = d3.scale.linear().domain([0, d3.max(dataset)])<pre style="color: red;">.rangeRound([0, height]);</pre>
+			</p>
+			<button onclick="linear_rangeRound()">试试看</button>
+			<script type="text/javascript">
+				function linear_rangeRound(){
+					// svg 尺寸
+					var margin = {'top':20, 'right': 20, 'bottom': 20, 'left': 20};
+					var width = 500 - margin.left - margin.right;
+					var height = 500 - margin.top - margin.bottom;
+					// 条宽
+					var barWidth = 8;
+					// 数据集
+					var dataset = [1.02, 2.02, 3.02, 4.02, 5.02, 6.02, 7.02, 8.02, 9.02, 10.02];
+					// 线性比例尺
+					var linearScale = d3.scale.linear()
+											.domain([0, d3.max(dataset)])
+											.rangeRound([0, height]);
+					// 创建SVG标签
+					var svg = d3.select('#linear_rangeRound').append('svg')
+								.attr('width', width+margin.left+margin.right)
+								.attr('height', height+margin.top+margin.bottom)
+								.append('g')
+								.attr('transform', 'translate('+0+','+margin.top+')');
+					// 创建矩形条
+					var rects = svg.selectAll('rect')
+									.data(dataset)
+									.enter()
+									.append('rect')
+									.attr({
+										'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+										'y': function(d, i){return height-linearScale(d);},  //矩形起始纵坐标
+										'width': function(d){return barWidth;},
+										'height': function(d){return linearScale(d);}, //矩形的条高
+										'fill': function(d){return 'steelblue';},
+										'stroke':'black',
+										'stroke-width': .5
+									});
+					// 创建矩形条的文本
+					var texts = svg.selectAll('text')
+									.data(dataset)
+									.enter()
+									.append('text')
+									.text(function(d){return linearScale(d);})
+									.attr({
+										'x': function(d, i){return (i+1)*(width/dataset.length)+margin.left-barWidth/2;},
+										'y': function(d, i){return height-linearScale(d);}
+									});
+					// 创建坐标轴
+					svg.append('g')
+						.attr('transform', 'translate('+margin.left+','+height+')')
+						.attr('class', 'x axis')
+						.call(d3.svg.axis().scale(d3.scale.linear().domain([0, d3.max(dataset)]).range([0, height])).orient('bottom'));
+				}
+			</script>
+		</fieldset>
+	</div>
+</body>
+</html>
