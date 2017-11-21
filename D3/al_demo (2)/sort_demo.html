@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>sort-demo</title>
+	<!-- D3 -->
+	<script type="text/javascript" src="../d3.min.js"></script>
+	<!-- hightlight code -->
+	<script type="text/javascript" src="../highlight/prism.js"></script>
+	<link rel="stylesheet" type="text/css" href="../highlight/prism.css" />
+	<!-- Button -->
+	<link rel="stylesheet" type="text/css" href="./buttons.css" />
+	<style type="text/css">
+		body{
+			background-color: rgb(248, 243, 209);
+		}
+		.message{
+			width: 300px;
+			height: auto;
+			background-color: #f5f2f0;
+			border-radius: 3px;
+			margin-left: 10px;
+			padding: 10px;
+			font-family: "Meiryo UI";
+			font-weight: 18px;
+			float: left;
+		}
+		.message text{
+			display: block;
+			margin: 0 auto;
+			font-family: "Meiryo UI";
+			font-weight: 18px;
+			color: #333;
+		}
+		.buttonBox{
+			width: 200px;
+			height: auto;
+			margin-left: 20px;
+			float: left;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		var numberset = [90, 80, 45, 78, 34, 23];
+	</script>
+	
+	<div id="test" style="margin-left: 100px; float: left;">
+		<pre>
+			<code class="language-javascript" style="float: left;">
+				function bubbleSort(array) {
+				   var length = array.length,
+				       i,
+				       j,
+				       temp;
+				   for (i = length - 1; 0 < i; i--) {
+				       for (j = 0; j < i; j++) {
+				           if (array[j] > array[j + 1]) {
+				               temp = array[j];
+				               array[j] = array[j + 1];
+				               array[j + 1] = temp;
+				           }
+				       }
+				   }
+				   return array;
+				}
+				
+				冒泡排序算法的流程如下：
+				1.比较相邻的元素。如果第一个比第二个大，就交换他们两个。
+				2.对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。在这一点，最后的元素应该会是最大的数。
+				3.针对所有的元素重复以上的步骤，除了最后一个。
+				4.持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。
+			</code>
+		</pre>
+		<script type="text/javascript">
+			window.onload = function(){
+				var svg = d3.select('#test')
+							.append('svg')
+							.attr({
+								'width':'1000px',
+								'height':'700px',
+								'float': 'left'
+							});
+				var group = svg.append('g');
+				var bubble = group.selectAll('circle').data(numberset).enter()				.append('circle')
+									.attr('class', function(d, i){return 'bubble'+i;})
+									.attr({
+										'cx':function(d, i){return 150+150*i+'px';},
+										'cy':'200px',
+										'r':function(d, i){return 50+d/5+'px';},
+										'fill':'skyblue'
+									});
+				var number = group.selectAll('text').data(numberset).enter().append('text')
+								.text(function(d){return d;})
+								.attr('class', function(d, i){return 'number'+i;})
+								.attr({
+									'x':function(d, i){return 150+150*i+'px';},
+									'y':'210px'
+								})
+								.style({
+									'text-anchor':'middle',
+									'font-size':'32px',
+									'font-weight':'bold',
+									'fill':'#fff'
+								});
+			}
+		</script>
+	</div>
+	<div class="message">
+		<text>
+			<pre style="background-color: skyblue;display: inline-block;width: 40px;height: 40px;border-radius: 50%;margin:0px;"></pre>
+			数据没有排序之前的颜色
+		</text>
+		<text>
+			<pre style="background-color: tomato; display: inline-block; width: 40px; height: 40px; border-radius: 50%; margin: 0px;"></pre>
+			数据进行比较时的颜色
+		</text>
+		<text>
+			<pre style="background-color: black; display: inline-block; width: 40px; height: 40px; border-radius: 50%; margin: 0px;"></pre>
+			待排序的数据颜色
+		</text>
+	</div>
+	<div class="buttonBox">
+		<a class="button button-glow button-border button-rounded button-primary" style="margin-bottom: 10px;" onclick="bubbleSort2()">冒泡排序</a>
+		<a class="button button-glow button-border button-rounded button-primary" href="./bubbleSort_self.html">动画分解</a>
+	</div>
+	<script type="text/javascript">
+		function messageNotice(string){
+			d3.select('.message')
+				.append('text')
+				.text(string)
+				.style({
+					'color': '#333',
+					'font-size': '16px',
+					'text-anchor': 'middle',
+					'margin-left': '10px'
+				});
+		}
+
+		function messageBigNotice(string){
+			d3.select('.message')
+				.append('text')
+				.text(string)
+				.style({
+					'color': 'tomato',
+					'font-size': '16px',
+					'text-anchor': 'middle',
+					'margin-left': '10px'
+				});
+		}
+
+		function bubbleSort2(){
+			console.log('ss');
+			var length = numberset.length,
+				count = 0,
+				color = 'tomato'; //正在进行比较的两个元素
+
+			for(var i = length-1; 0 < i; i--){
+				console.log('cd');
+				for(var j = 0; j < i; j++){
+
+					//setTimeout(), 闭包，因为j有重复值，所以定义count,循环延迟执行
+					(function(j){
+						console.log('cddd');
+						setTimeout(function(){
+							console.log('2323');
+							var curBubble = d3.select('.bubble'+j),
+								curNumber = d3.select('.number'+j),
+								nextBubble = d3.select('.bubble'+(j+1)),
+								nextNumber = d3.select('.number'+(j+1));
+								console.log(curNumber.text());
+								console.log('j='+j);
+								console.log(nextNumber.text());
+							var curNumberText = curNumber.text(),
+								nextNumberText = nextNumber.text();
+							messageNotice('比较'+curNumberText+'与'+nextNumberText);
+							if(curNumberText > nextNumberText){
+								messageNotice(curNumberText+'>'+nextNumberText);
+								//cloneNode()保证深复制
+								var temp = curNumber.text();
+								curBubble.style('fill', color);
+
+								//根据当前数值设置半径
+								curBubble.transition().duration(1000).ease(d3.ease('linear')).attr({
+									'r': 50+nextNumber.text()/5+'px'
+								});
+								curNumber.text(nextNumber.text());
+
+								nextBubble.style('fill', color);
+								nextBubble.transition().duration(1000).ease(d3.ease('linear')).attr({
+									'r': 50+temp/5+'px'
+								});
+								nextNumber.text(temp);
+
+								messageBigNotice('数字'+curNumberText+'和数字'+nextNumberText+'完成交换');
+								//在比较前的元素置为天蓝色
+								for(var p=0; p<j; p++){
+									d3.select('.bubble'+p).style('fill','skyblue');
+								}
+
+								//在比较后的元素置为黑色
+								for(var q=length-1; q>j+1; q--){
+									d3.select('.bubble'+q).style('fill', 'black');
+								}
+							}
+						}, count*1500);
+					})(j);
+					count++;
+
+				}
+			}
+		}
+	</script>
+</body>
+</html>
