@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>LZW-字符串压缩算法之压缩</title>
+	<!-- hightlight code -->
+	<script type="text/javascript" src="../highlight/prism.js"></script>
+	<link rel="stylesheet" type="text/css" href="../highlight/prism.css" />
+	<!-- Button -->
+	<link rel="stylesheet" type="text/css" href="./buttons.css" />
+	<style type="text/css">
+		.animateContainer{
+			width: 1000px;
+			height: auto;
+			border: 1px solid #333;
+			float: left;
+		}
+		.animateContainer .inputBox{
+			width: 1000px;
+			height: 200px;
+			background-color: pink;
+		}
+		.animateContainer .dicBox{
+			width: 200px;
+			height: auto;
+			background-color: #eee;
+			float: left;
+		}
+		.animateContainer .animateBox{
+			width: 700px;
+			height: auto;
+			margin-left: 50px;
+			border: 1px solid #333;
+			float: left;
+		}
+		.tdodd {   
+		    padding: 5px 0;   
+		    background-color: #DEE6FC;   
+		    line-height: 25px;   
+		}   
+		.tdeven {   
+		    padding: 5px;   
+		    background-color: #EFF3FE;   
+		    line-height: 25px;   
+		}   
+		.td_over {   
+		    padding: 5px;   
+		    background-color: #fff;   
+		    line-height: 25px;   
+		    color: #203b8e;   
+		}   
+		.th_title {   
+		    text-align: center;   
+		    background-color: #fff;   
+		    font-size: 12px;   
+		    line-height: 13px;   
+		    font-weight: bold;   
+		}   
+	</style>
+</head>
+<body>
+	<pre style="width: 700px; height: auto; float: left;">
+		<code class="language-javascript">
+			compress: function (uncompressed) {
+		        "use strict";
+		        // Build the dictionary.
+		        var i,
+		            dictionary = {},
+		            c,
+		            wc,
+		            w = "",
+		            result = [],
+		            dictSize = 256;
+		        for (i = 0; i < 256; i += 1) {
+		            dictionary[String.fromCharCode(i)] = i;
+		        }
+		 
+		        for (i = 0; i < uncompressed.length; i += 1) {
+		            c = uncompressed.charAt(i);
+		            wc = w + c;
+		            //Do not use dictionary[wc] because javascript arrays 
+		            //will return values for array['pop'], array['push'] etc
+		           // if (dictionary[wc]) {
+		            if (dictionary.hasOwnProperty(wc)) {
+		                w = wc;
+		            } else {
+		                result.push(dictionary[w]);
+		                // Add wc to the dictionary.
+		                dictionary[wc] = dictSize++;
+		                w = String(c);
+		            }
+		        }
+		 
+		        // Output the code for w.
+		        if (w !== "") {
+		            result.push(dictionary[w]);
+		        }
+		        return result;
+		    }
+		</code>
+	</pre>
+<div class="animateContainer">
+	<div class="inputBox">
+		<form name="myform">
+			<input type="text" name="strValue" />
+			<a class="button button-glow button-border button-rounded button-primary" onclick="startFun()">查看动画</a>
+		</form>
+	</div>
+	<div class="dicBox">
+		
+	</div>
+	<div class="animateBox">
+
+		<script type="text/javascript">
+			//var str = "TOBEORNOTTOBEORTOBEORNOT";
+			//启动函数
+			function startFun(){
+				var str = myform.strValue.value;
+				console.log('str = '+str);
+				compress(str);
+			}
+			//打印表格
+			function printList(){
+				//listDiv表示要加入的页面的位置
+				var listDivObj = document.getElementsByClassName('animateBox');
+				var tab = document.createElement('table');
+				//设置table样式
+				tab.width = '100%';
+
+				//打印表头
+				var tr = tab.insertRow();
+
+				tr.onmouseover = function(){this.className = 'th_title';};
+				tr.onmouseout = function(){this.className = 'th_title';};
+				var td = tr.insertCell(0);
+				td.innerHTML = "步骤";
+				var td = tr.insertCell(1);
+				td.innerHTML = "w";
+				var td = tr.insertCell(2);
+				td.innerHTML = "c";
+				var td = tr.insertCell(3);
+				td.innerHTML = "w+c";
+				var td = tr.insertCell(4);
+				td.innerHTML = "w+c 在字典中吗？";
+				var td = tr.insertCell(5);
+				td.innerHTML = "执行操作";
+				var td = tr.insertCell(6);
+				td.innerHTML = "输出";
+
+				document.getElementsByClassName('animateBox')[0].appendChild(tab);
+
+				//字典
+				var DicDivObj = document.getElementsByClassName('dicBox');
+				var tab2 = document.createElement('table');
+				tab2.width = '100%';
+				var tr2 = tab2.insertRow();
+				tr2.onmouseover = function(){this.className = 'th_title';};
+				tr2.onmouseout = function(){this.className = 'th_title';};
+				var td2 = tr2.insertCell(0);
+				td2.innerHTML = "记号(Symbol)";
+				var td2 = tr2.insertCell(1);
+				td2.innerHTML = "字符串(string)";
+				document.getElementsByClassName('dicBox')[0].appendChild(tab2);
+			}
+
+			//LZW Compression/Decompression for Strings
+			function compress(uncompressed) {
+		        "use strict";
+		        // Build the dictionary.
+
+		        printList();
+		        var inputString = "";
+		        var j;
+		        for(j = 0; j < uncompressed.length; j += 1){
+		        	if(inputString.indexOf(uncompressed[j]) == -1){
+		        		inputString = inputString + uncompressed.charAt(j);
+		        	}
+		        }
+		        console.log(inputString);
+		        var i,
+		            dictionary = {},
+		            c,
+		            wc,
+		            w = "",
+		            result = [],
+		            dictSize = inputString.length;
+		        for (i = 0; i < dictSize; i += 1) {
+		            dictionary[inputString[i]] = i;
+
+		            var tab2 = document.getElementsByTagName('table')[0];
+		           // console.log(tab2);
+		            var tr2 = tab2.insertRow();
+		            //tr styles
+	                if((i+1)%2){ //odd
+	                	tr2.className = 'tdeven';
+	                	tr2.onmouseover = function(){this.className = 'td_over';};
+	                	tr2.onmouseout = function(){this.className = 'tdeven';};
+	                }else{ //even
+	                	tr2.className = 'tdodd';
+	                	tr2.onmouseover = function(){this.className = 'td_over';};
+	                	tr2.onmouseout = function(){this.className = 'tdodd'};
+	                }
+		            var td2 = tr2.insertCell(0);
+		            td2.innerHTML = i;
+		            var td2 = tr2.insertCell(1);
+		            td2.innerHTML = inputString[i];
+		        }
+
+		 		var count = 0;
+
+		        for (i = 0; i < uncompressed.length; i += 1) {
+		        	(function(i) {
+		        		setTimeout(function(){
+
+		        			c = uncompressed.charAt(i);
+				            wc = w + c;
+				            //Do not use dictionary[wc] because javascript arrays 
+				            //will return values for array['pop'], array['push'] etc
+				           // if (dictionary[wc]) {
+				            if (dictionary.hasOwnProperty(wc)) {
+				                console.log(w+','+c+','+wc+','+'Yes'+','+'更新w='+wc+','+'-');
+				                var tab = document.getElementsByTagName('table')[1];
+				                var tr = tab.insertRow();
+				                //tr styles
+				                if((i+1)%2){ //odd
+				                	tr.className = 'tdeven';
+				                	tr.onmouseover = function(){this.className = 'td_over';};
+				                	tr.onmouseout = function(){this.className = 'tdeven';};
+				                }else{ //even
+				                	tr.className = 'tdodd';
+				                	tr.onmouseover = function(){this.className = 'td_over';};
+				                	tr.onmouseout = function(){this.className = 'tdodd'};
+				                }
+				                var td = tr.insertCell(0);
+				                td.innerHTML = i+1;
+				                var td = tr.insertCell(1);
+				                td.innerHTML = w;
+				                var td = tr.insertCell(2);
+				                td.innerHTML = c;
+				                var td = tr.insertCell(3);
+				                td.innerHTML = wc;
+				                var td = tr.insertCell(4);
+				                td.innerHTML = 'Yes';
+				                var td = tr.insertCell(5);
+				                td.innerHTML = '更新w='+wc;
+				                var td = tr.insertCell(6);
+				                td.innerHTML = '-';
+				                //document.getElementsByTagName('table')[0].appendChild(tab);
+
+				                w = wc;
+				            } else {
+				                result.push(dictionary[w]);
+				                // Add wc to the dictionary.
+				                dictionary[wc] = dictSize++;
+				                console.log(w+','+c+','+wc+','+'No'+','+'添加'+(dictSize-1)+'->'+wc+'，更新w='+c+','+dictionary[c]);
+				                var tab = document.getElementsByTagName('table')[1];
+				                var tr = tab.insertRow();
+				                //tr styles
+				                if((i+1)%2){ //odd
+				                	tr.className = 'tdeven';
+				                	tr.onmouseover = function(){this.className = 'td_over';};
+				                	tr.onmouseout = function(){this.className = 'tdeven';};
+				                }else{ //even
+				                	tr.className = 'tdodd';
+				                	tr.onmouseover = function(){this.className = 'td_over';};
+				                	tr.onmouseout = function(){this.className = 'tdodd'};
+				                }
+				                var td = tr.insertCell(0);
+				                td.innerHTML = i+1;
+				                var td = tr.insertCell(1);
+				                td.innerHTML = w;
+				                var td = tr.insertCell(2);
+				                td.innerHTML = c;
+				                var td = tr.insertCell(3);
+				                td.innerHTML = wc;
+				                var td = tr.insertCell(4);
+				                td.innerHTML = 'No';
+				                var td = tr.insertCell(5);
+				                td.innerHTML = '添加'+(dictSize-1)+'->'+wc+'，更新w='+c;
+				                var td = tr.insertCell(6);
+				                td.innerHTML = dictionary[c];
+
+				                //字典
+				                var tab2 = document.getElementsByTagName('table')[0];
+				                var tr2 = tab2.insertRow();
+				                //tr styles
+				                if((i+1)%2){ //odd
+				                	tr2.className = 'tdeven';
+				                	tr2.onmouseover = function(){this.className = 'td_over';};
+				                	tr2.onmouseout = function(){this.className = 'tdeven';};
+				                }else{ //even
+				                	tr2.className = 'tdodd';
+				                	tr2.onmouseover = function(){this.className = 'td_over';};
+				                	tr2.onmouseout = function(){this.className = 'tdodd'};
+				                }
+				                var td2 = tr2.insertCell(0);
+				                td2.innerHTML = dictSize-1;
+				                var td2 = tr2.insertCell(1);
+				                td2.innerHTML = wc;
+
+				                w = String(c);
+				            }
+
+		        		}, count*1500);
+		        	})(i);
+		        	count++;
+		            
+		        }
+		 
+		        // Output the code for w.
+		        if (w !== "") {
+		            result.push(dictionary[w]);
+		        }
+		       // return result;
+		       
+		       console.log(result);
+		    }
+		</script>
+	</div>
+</div>
+
+	
+</body>
+</html>
