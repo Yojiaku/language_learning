@@ -13,12 +13,12 @@
 			width: 1000px;
 			height: auto;
 			border: 1px solid #333;
-			float: left;
+			float: right;
 		}
 		.animateContainer .inputBox{
-			width: 1000px;
-			height: 200px;
-			background-color: pink;
+			width: 970px;
+			height: 60px;
+			background-color: skyblue;
 		}
 		.animateContainer .dicBox{
 			width: 200px;
@@ -33,6 +33,16 @@
 			border: 1px solid #333;
 			float: left;
 		}
+		ul{
+			list-style-type: none;
+		}
+		ul li{
+			width: 600px;
+			margin-bottom: 10px;
+		}
+		table{
+			text-align: center;
+		}
 		.tdodd {   
 		    padding: 5px 0;   
 		    background-color: #DEE6FC;   
@@ -42,7 +52,17 @@
 		    padding: 5px;   
 		    background-color: #EFF3FE;   
 		    line-height: 25px;   
-		}   
+		} 
+		.tdodd2 {
+			padding: 5px 0;
+			background-color: pink;
+			line-height: 25px;
+		}  
+		.tdeven2 {
+			padding: 5px;
+			background-color: red;
+			line-height: 25px;
+		}
 		.td_over {   
 		    padding: 5px;   
 		    background-color: #fff;   
@@ -56,10 +76,108 @@
 		    line-height: 13px;   
 		    font-weight: bold;   
 		}   
+		.form-style-2{
+		    max-width: 1000px;
+		    padding: 20px 12px 10px 20px;
+		    font: 13px Arial, Helvetica, sans-serif;
+		}
+		.form-style-2-heading{
+		    font-weight: bold;
+		    font-style: italic;
+		    border-bottom: 2px solid #ddd;
+		    margin-bottom: 20px;
+		    font-size: 15px;
+		    padding-bottom: 3px;
+		}
+		.form-style-2 label{
+		    display: block;
+		    margin: 0px 0px 15px 0px;
+		}
+		.form-style-2 label > span{
+		    width: 100px;
+		    font-weight: bold;
+		    float: left;
+		    padding-top: 8px;
+		    padding-right: 5px;
+		}
+		.form-style-2 span.required{
+		    color:red;
+		}
+		.form-style-2 .tel-number-field{
+		    width: 40px;
+		    text-align: center;
+		}
+		.form-style-2 input.input-field{
+		    width: 48%;
+		    
+		}
+
+		.form-style-2 input.input-field, 
+		.form-style-2 .tel-number-field, 
+		.form-style-2 .textarea-field, 
+		 .form-style-2 .select-field{
+		    box-sizing: border-box;
+		    -webkit-box-sizing: border-box;
+		    -moz-box-sizing: border-box;
+		    border: 1px solid #C2C2C2;
+		    box-shadow: 1px 1px 4px #EBEBEB;
+		    -moz-box-shadow: 1px 1px 4px #EBEBEB;
+		    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+		    border-radius: 3px;
+		    -webkit-border-radius: 3px;
+		    -moz-border-radius: 3px;
+		    padding: 7px;
+		    outline: none;
+		}
+		.form-style-2 .input-field:focus, 
+		.form-style-2 .tel-number-field:focus, 
+		.form-style-2 .textarea-field:focus,  
+		.form-style-2 .select-field:focus{
+		    border: 1px solid #0C0;
+		}
+		.form-style-2 .textarea-field{
+		    height:100px;
+		    width: 55%;
+		}
+		.form-style-2 input[type=submit],
+		.form-style-2 input[type=button]{
+		    border: none;
+		    padding: 8px 15px 8px 15px;
+		    background: #FF8500;
+		    color: #fff;
+		    box-shadow: 1px 1px 4px #DADADA;
+		    -moz-box-shadow: 1px 1px 4px #DADADA;
+		    -webkit-box-shadow: 1px 1px 4px #DADADA;
+		    border-radius: 3px;
+		    -webkit-border-radius: 3px;
+		    -moz-border-radius: 3px;
+		}
+		.form-style-2 input[type=submit]:hover,
+		.form-style-2 input[type=button]:hover{
+		    background: #EA7B00;
+		    color: #fff;
+		}
 	</style>
 </head>
 <body>
-	<pre style="width: 700px; height: auto; float: left;">
+<div style="width: 700px; height: auto;float: left;">
+	<div style="width: 700px; height: auto; padding: 16px; background-color: rgb(245, 242, 240);">
+		<ul>
+			<li id="step_initDic">1）初始化：将所有的单字符串放入词典</li>
+			<li id="step2">2）读第一个输入字符给前缀串W</li>
+			<li id="step3">3）<pre style="color: red; display: inline-block;">Step:</pre>读下一个输入字符C；</li>
+			<li class="step3_1">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;&nbsp;没有这样的C（输入已穷尽）：</li>
+			<li class="step3_1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码字（W）输出；结束。</li>
+			<li class="step3_2">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;&nbsp;W+C已存在于字典中：</li>
+			<li class="step3_2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			W:=W+C；repeat<pre style="color: red; display: inline-block;">&nbsp;Step</pre>;</li>
+			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;W+C不在字典中：</li>
+			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W+C加进字典：</li>
+			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码字（W）输出：</li>
+			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W:=C；repeat&nbsp;<pre style="color: red; display: inline-block;">Step</pre>.</li>
+		</ul>
+	</div>
+	<pre style="width: 700px; height: auto;">
 		<code class="language-javascript">
 			compress: function (uncompressed) {
 		        "use strict";
@@ -99,11 +217,36 @@
 		    }
 		</code>
 	</pre>
+</div>
 <div class="animateContainer">
-	<div class="inputBox">
+	<!--<div class="inputBox">
 		<form name="myform">
 			<input type="text" name="strValue" />
 			<a class="button button-glow button-border button-rounded button-primary" onclick="startFun()">查看动画</a>
+		</form>
+	</div>-->
+	<div class="form-style-2 inputBox">
+		<form action="" method="post" name="myform">
+			
+			<label>
+				<span>请输入需要压缩的字符串</span>
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4" />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
+				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="10"  />
+				<input type="button" value='提交' onclick='startFun()'/>
+			</label>
+			
 		</form>
 	</div>
 	<div class="dicBox">
@@ -115,7 +258,14 @@
 			//var str = "TOBEORNOTTOBEORTOBEORNOT";
 			//启动函数
 			function startFun(){
-				var str = myform.strValue.value;
+				var x = document.getElementsByName("strValue");
+				var i;
+				var str = "";
+				for (i = 0; i < x.length; i++) {
+				    str = str+x[i].value;
+				}
+				//console.log(str);
+				//var str = myform.strValue.value;
 				console.log('str = '+str);
 				compress(str);
 			}
@@ -135,13 +285,13 @@
 				var td = tr.insertCell(0);
 				td.innerHTML = "步骤";
 				var td = tr.insertCell(1);
-				td.innerHTML = "w";
+				td.innerHTML = "W";
 				var td = tr.insertCell(2);
-				td.innerHTML = "c";
+				td.innerHTML = "C";
 				var td = tr.insertCell(3);
-				td.innerHTML = "w+c";
+				td.innerHTML = "W+C";
 				var td = tr.insertCell(4);
-				td.innerHTML = "w+c 在字典中吗？";
+				td.innerHTML = "W+C 在字典中吗？";
 				var td = tr.insertCell(5);
 				td.innerHTML = "执行操作";
 				var td = tr.insertCell(6);
@@ -157,14 +307,18 @@
 				tr2.onmouseover = function(){this.className = 'th_title';};
 				tr2.onmouseout = function(){this.className = 'th_title';};
 				var td2 = tr2.insertCell(0);
-				td2.innerHTML = "记号(Symbol)";
+				td2.innerHTML = "码字(Code word)";
 				var td2 = tr2.insertCell(1);
-				td2.innerHTML = "字符串(string)";
+				td2.innerHTML = "前缀(Prefix)";
 				document.getElementsByClassName('dicBox')[0].appendChild(tab2);
 			}
 
+			function sleep(ms){
+				return new Promise(resolve => setTimeout(resolve, ms));
+			}
+
 			//LZW Compression/Decompression for Strings
-			function compress(uncompressed) {
+			async function compress(uncompressed) {
 		        "use strict";
 		        // Build the dictionary.
 
@@ -184,40 +338,60 @@
 		            w = "",
 		            result = [],
 		            dictSize = inputString.length;
+
+		        var countNum = 0;
 		        for (i = 0; i < dictSize; i += 1) {
-		            dictionary[inputString[i]] = i;
+		        	document.getElementById('step_initDic').setAttribute('style','background-color:rgb(245,242,240);');
+		        	dictionary[inputString[i]] = i;
 
 		            var tab2 = document.getElementsByTagName('table')[0];
 		           // console.log(tab2);
 		            var tr2 = tab2.insertRow();
 		            //tr styles
 	                if((i+1)%2){ //odd
-	                	tr2.className = 'tdeven';
+	                	tr2.className = 'tdeven2';
 	                	tr2.onmouseover = function(){this.className = 'td_over';};
-	                	tr2.onmouseout = function(){this.className = 'tdeven';};
+	                	tr2.onmouseout = function(){this.className = 'tdeven2';};
 	                }else{ //even
-	                	tr2.className = 'tdodd';
+	                	tr2.className = 'tdodd2';
 	                	tr2.onmouseover = function(){this.className = 'td_over';};
-	                	tr2.onmouseout = function(){this.className = 'tdodd'};
+	                	tr2.onmouseout = function(){this.className = 'tdodd2'};
 	                }
 		            var td2 = tr2.insertCell(0);
 		            td2.innerHTML = i;
 		            var td2 = tr2.insertCell(1);
 		            td2.innerHTML = inputString[i];
+		            document.getElementById('step_initDic').setAttribute('style','background-color:pink;');
+        			
+		            await sleep(1500);
 		        }
+		        document.getElementById('step_initDic').setAttribute('style','background-color:rgb(245,242,240);');
+		        	
 
-		 		var count = 0;
+
+//		 		var count = 0;
 
 		        for (i = 0; i < uncompressed.length; i += 1) {
-		        	(function(i) {
-		        		setTimeout(function(){
-
+//		        	(function(i) {
+//		        		setTimeout(function(){
+		        			if(i == 0){
+		        				document.getElementById('step2').setAttribute('style','background-color:pink;');
+		        				await sleep(1500);
+		        				document.getElementById('step2').setAttribute('style','background-color:rgb(245, 242, 240);');
+		        			}
 		        			c = uncompressed.charAt(i);
 				            wc = w + c;
 				            //Do not use dictionary[wc] because javascript arrays 
 				            //will return values for array['pop'], array['push'] etc
 				           // if (dictionary[wc]) {
 				            if (dictionary.hasOwnProperty(wc)) {
+
+				            	var list = document.getElementsByClassName('step3_2');
+				            	var index;
+				            	for(index=0; index<list.length; index++){
+				            		list[index].setAttribute('style', 'background-color:pink;');
+				            	}
+
 				                console.log(w+','+c+','+wc+','+'Yes'+','+'更新w='+wc+','+'-');
 				                var tab = document.getElementsByTagName('table')[1];
 				                var tr = tab.insertRow();
@@ -245,14 +419,27 @@
 				                td.innerHTML = '更新w='+wc;
 				                var td = tr.insertCell(6);
 				                td.innerHTML = '-';
-				                //document.getElementsByTagName('table')[0].appendChild(tab);
 
 				                w = wc;
+
+				                await sleep(1500);
+
+				                for(index=0; index<list.length; index++){
+				                	list[index].setAttribute('style', 'background-color: rgb(245, 242,240);');
+				                }
+
 				            } else {
+
+				            	var list = document.getElementsByClassName('step3_3');
+				            	var index;
+				            	for(index=0; index<list.length; index++){
+				            		list[index].setAttribute('style', 'background-color: pink;');
+				            	}
+
 				                result.push(dictionary[w]);
 				                // Add wc to the dictionary.
 				                dictionary[wc] = dictSize++;
-				                console.log(w+','+c+','+wc+','+'No'+','+'添加'+(dictSize-1)+'->'+wc+'，更新w='+c+','+dictionary[c]);
+				                console.log(w+','+c+','+wc+','+'No'+','+'添加'+(dictSize-1)+'->'+wc+'，更新w='+c+','+dictionary[w]);
 				                var tab = document.getElementsByTagName('table')[1];
 				                var tr = tab.insertRow();
 				                //tr styles
@@ -278,7 +465,7 @@
 				                var td = tr.insertCell(5);
 				                td.innerHTML = '添加'+(dictSize-1)+'->'+wc+'，更新w='+c;
 				                var td = tr.insertCell(6);
-				                td.innerHTML = dictionary[c];
+				                td.innerHTML = dictionary[w];
 
 				                //字典
 				                var tab2 = document.getElementsByTagName('table')[0];
@@ -299,20 +486,59 @@
 				                td2.innerHTML = wc;
 
 				                w = String(c);
+
+				                await sleep(1500);
+				                for(index=0; index<list.length; index++){
+									list[index].setAttribute('style', 'background-color: rgb(245, 242, 240);');
+				                }
 				            }
 
-		        		}, count*1500);
-		        	})(i);
-		        	count++;
+//		        		}, count*1500);
+//		        	})(i);
+//		        	count++;
 		            
 		        }
 		 
 		        // Output the code for w.
 		        if (w !== "") {
+
+		        	var list = document.getElementsByClassName('step3_1');
+	            	var index;
+	            	for(index=0; index<list.length; index++){
+	            		list[index].setAttribute('style', 'background-color: pink;');
+	            	}
+
 		            result.push(dictionary[w]);
+
+		            var tab3 = document.getElementsByTagName('table')[1];
+	                var tr3 = tab3.insertRow();
+	                //tr styles
+	                if((i+1)%2){ //odd
+	                	tr3.className = 'tdeven';
+	                	tr3.onmouseover = function(){this.className = 'td_over';};
+	                	tr3.onmouseout = function(){this.className = 'tdeven';};
+	                }else{ //even
+	                	tr3.className = 'tdodd';
+	                	tr3.onmouseover = function(){this.className = 'td_over';};
+	                	tr3.onmouseout = function(){this.className = 'tdodd'};
+	                }
+	                var td3 = tr3.insertCell(0);
+	                td3.innerHTML = i+1;
+	                var td3 = tr3.insertCell(1);
+	                td3.innerHTML = w;
+	                var td3 = tr3.insertCell(2);
+	                td3.innerHTML = '-';
+	                var td3 = tr3.insertCell(3);
+	                td3.innerHTML = '-';
+	                var td3 = tr3.insertCell(4);
+	                td3.innerHTML = '-';
+	                var td3 = tr3.insertCell(5);
+	                td3.innerHTML = '-';
+	                var td3 = tr3.insertCell(6);
+	                td3.innerHTML = dictionary[w];
 		        }
 		       // return result;
-		       
+
 		       console.log(result);
 		    }
 		</script>
