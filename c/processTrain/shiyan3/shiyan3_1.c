@@ -13,10 +13,11 @@ struct VirtualPCB
 {
 	int tid;  //线程号
 	char state;  //线程运行状态(F为处于就绪，T为处于执行)
-	int priority;
+	int priority;  //优先级
 	int arrivetime;  //到达时间
 	int cpuburst;  //cpu区间
-	int runnedtime; //进程已经运行的时间
+	int needtime; //进程还需要多少时间执行完
+	int waittime;  //等待时间
 }PCB[THREAD_NUM];
 
 void thread_init()
@@ -29,9 +30,10 @@ void thread_init()
 		PCB[n].state = 'F';
 		//用随机数随机产生虚拟PCB的值
 		PCB[n].priority = 1+rand()%19;
-		PCB[n].arrivetime = n; //模拟时，默认进程按创建顺序依次在0时刻到达
+		PCB[n].arrivetime = 0; //模拟时，默认进程按创建顺序依次在0时刻到达
 		PCB[n].cpuburst = 1+rand()%19;
-		PCB[n].runnedtime = 0;
+		PCB[n].needtime = PCB[n].cpuburst;
+		PCB[n].waittime = 0;
 	}
 }
 
@@ -77,21 +79,16 @@ void FCFS(){
 	printf("\n------------------先来先服务FCFS调度算法实现结果------------------\n");
 	int i, j;
 	int clock = 0; //时钟
-	float waittime = 0;  //单个进程的等待时间
 	float total_waittime = 0;  //FCFS总等待时间
 	float average_waittime = 0;  //FCFS平均等待时间
-	int starttime = 0;  //每个进程的开始时间
-	printf("进程\t 开始时间 运行时间 等待时间 结束时间\n");
-	for(i=0; i<THREAD_NUM; i++){
+	printf("\t进程\t 开始时间\t 运行时间\n");
+	for(i=0; i<THREAD_NUM/2; i++){
 		for(j=0; j<THREAD_NUM; j++){
 			if(PCB[j].arrivetime == i && PCB[j].state == 'F'){
-				PCB[j].state = 'T';  //将其状态设为T
-				starttime = clock;
-				waittime = starttime;  //FCFS等待时间就是其开始时间
-				total_waittime = total_waittime + waittime;
+				printf("\tThread:%-2d \t %-3d \t %-2d\n", PCB[j].tid, clock, PCB[j].cpuburst);
+				total_waittime = total_waittime + (float)clock;
 				clock = clock + PCB[j].cpuburst;
-				PCB[j].runnedtime = PCB[j].cpuburst; //进程已经运行的时间就为其CPU区间
-				printf("Thread:%-2d \t%-3d \t%-2d \t%-.2f \t%-2d \n", PCB[j].tid, starttime, PCB[j].cpuburst, waittime, clock);
+				PCB[j].state = 'T';
 			}
 		}
 	}
@@ -107,11 +104,79 @@ void SJF(){
 		PCB[k].state = 'F';
 	}
 	int i, j;
-	int clock = 0;
-	float waittime = 0;
+	int clock = 0;  //时钟
+	float total_waittime = 0;  //总等待时间
+	float average_waittime = 0; //平均等待时间
+	printf("\t进程\t 开始时间\t 运行时间\n");
+	for(i=1; i<THREAD_NUM; i++){
+		for(j=0; j<THREAD_NUM; j++){
+			if(PCB[j].cpuburst == i && PCB[j].state == 'F'){
+				printf("\tThread:%-2d \t %-3d \t %-2d\n", PCB[j].tid, clock, PCB[j].cpuburst);
+				total_waittime = total_waittime + (float)clock;
+				clock = clock + PCB[j].cpuburst;
+				PCB[j].state = 'T';
+			}
+		}
+	}
+	average_waittime = total_waittime / (float)THREAD_NUM;
+	printf("总等待时间:%f\n", total_waittime);
+	printf("平均等待时间:%f\n", average_waittime);
+}
+
+void RR(int timeslice){
+	printf("\n------------------轮转发调度RR调度算法实现结果------------------\n");
+	int clock = 0; //时钟
+	float total_waittime = 0; //总等待时间
+	float average_waittime = 0; //平均等待时间
+	printf("\t进程\t 开始时间\t 运行时间\n");
+	for(int i=0; i<THREAD_NUM; i++){
+		PCB[i].state = 'F';
+	}
+	for(int j=0; j<20*THREAD_NUM; j=j+timeslice){
+		int k = (j%(20*timeslice))/timeslice;
+		//printf("k=%d\n", k);
+		if(PCB[k].needtime > 0){
+			int tempwaittime = timeslice;
+			if(PCB[k].needtime-timeslice <= 0){
+				tempwaittime = PCB[k].needtime;
+				PCB[k].waittime = clock + tempwaittime - PCB[k].cpuburst;
+			}
+			printf("\tThread:%-2d \t %-3d \t %-2d\n", PCB[k].tid, clock, tempwaittime);
+			clock = clock + tempwaittime;
+			PCB[k].needtime = PCB[k].needtime - timeslice;
+		}
+	}
+	for(int num=0; num<THREAD_NUM; num++){
+		total_waittime = total_waittime + PCB[num].waittime;
+	}
+	average_waittime = total_waittime / (float)THREAD_NUM;
+	printf("总等待时间:%f\n", total_waittime);
+	printf("平均等待时间:%f\n", average_waittime);
+}
+
+void Priority(){
+	printf("\n------------------优先级Priority调度算法实现结果------------------\n");
+	printf("\t进程\t 开始时间\t 运行时间\n");
+	for(int k=0; k<THREAD_NUM; k++){
+		PCB[k].state = 'F';
+	}
+	int i, j;
+	int clock = 0; //时钟
 	float total_waittime = 0;
 	float average_waittime = 0;
-	//将所有进程先按照CPU区间从小到大排队
+	for(i=1; i<THREAD_NUM; i++){
+		for(j=0; j<THREAD_NUM; j++){
+			if(PCB[j].priority == i && PCB[j].state == 'F'){
+				printf("\tThread:%-2d \t %-3d \t %-2d\n", PCB[j].tid, clock, PCB[j].cpuburst);
+				total_waittime = total_waittime + (float)clock;
+				clock = clock + PCB[j].cpuburst;
+				PCB[j].state = 'T';
+			}
+		}
+	}
+	average_waittime = total_waittime / (float)THREAD_NUM;
+	printf("总等待时间:%f\n", total_waittime);
+	printf("平均等待时间:%f\n", average_waittime);
 }
 
 int main(){
@@ -129,7 +194,7 @@ int main(){
 
 	//先来先服务FCFS
 	FCFS();
-	/*//最短作业优先
+	//最短作业优先
 	SJF();
 	//轮转
 	printf("请输入时间片长度：\n");
@@ -138,7 +203,7 @@ int main(){
 	RR(timeslice);
 	//优先级调度
 	Priority();
-	//多级队列调度*/
+	//多级队列调度
 
 	return 0;
 }

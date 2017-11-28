@@ -3,11 +3,6 @@
 <head>
 	<meta charset="utf-8">
 	<title>LZW-字符串压缩算法之压缩</title>
-	<!-- hightlight code -->
-	<script type="text/javascript" src="../highlight/prism.js"></script>
-	<link rel="stylesheet" type="text/css" href="../highlight/prism.css" />
-	<!-- Button -->
-	<link rel="stylesheet" type="text/css" href="./buttons.css" />
 	<style type="text/css">
 		.animateContainer{
 			width: 1000px;
@@ -17,7 +12,7 @@
 		}
 		.animateContainer .inputBox{
 			width: 970px;
-			height: 60px;
+			height: 200px;
 			background-color: skyblue;
 		}
 		.animateContainer .dicBox{
@@ -30,7 +25,7 @@
 			width: 700px;
 			height: auto;
 			margin-left: 50px;
-			border: 1px solid #333;
+			/*border: 1px solid #333;*/
 			float: left;
 		}
 		ul{
@@ -60,7 +55,7 @@
 		}  
 		.tdeven2 {
 			padding: 5px;
-			background-color: red;
+			background-color: rgba(255, 0, 0, 0.52);
 			line-height: 25px;
 		}
 		.td_over {   
@@ -108,7 +103,7 @@
 		    text-align: center;
 		}
 		.form-style-2 input.input-field{
-		    width: 48%;
+		    width: 80%;
 		    
 		}
 
@@ -163,90 +158,59 @@
 <div style="width: 700px; height: auto;float: left;">
 	<div style="width: 700px; height: auto; padding: 16px; background-color: rgb(245, 242, 240);">
 		<ul>
+			<li style="background-color: skyblue; font-weight: bold;padding: 10px;color: #fff;">压缩过程：</li>
 			<li id="step_initDic">1）初始化：将所有的单字符串放入词典</li>
 			<li id="step2">2）读第一个输入字符给前缀串W</li>
-			<li id="step3">3）<pre style="color: red; display: inline-block;">Step:</pre>读下一个输入字符C；</li>
+			<li id="step3">3）<pre style="color: red; display: inline-block; margin: 0px;">Step:</pre>读下一个输入字符C；</li>
 			<li class="step3_1">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;&nbsp;没有这样的C（输入已穷尽）：</li>
 			<li class="step3_1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码字（W）输出；结束。</li>
 			<li class="step3_2">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;&nbsp;W+C已存在于字典中：</li>
 			<li class="step3_2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			W:=W+C；repeat<pre style="color: red; display: inline-block;">&nbsp;Step</pre>;</li>
+			W:=W+C；repeat<pre style="color: red; display: inline-block; margin: 0px;">&nbsp;Step</pre>;</li>
 			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;&nbsp;W+C不在字典中：</li>
 			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W+C加进字典：</li>
 			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码字（W）输出：</li>
-			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W:=C；repeat&nbsp;<pre style="color: red; display: inline-block;">Step</pre>.</li>
+			<li class="step3_3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;W:=C；repeat&nbsp;<pre style="color: red; display: inline-block; margin: 0px;">Step</pre>.</li>
 		</ul>
 	</div>
-	<pre style="width: 700px; height: auto;">
-		<code class="language-javascript">
-			compress: function (uncompressed) {
-		        "use strict";
-		        // Build the dictionary.
-		        var i,
-		            dictionary = {},
-		            c,
-		            wc,
-		            w = "",
-		            result = [],
-		            dictSize = 256;
-		        for (i = 0; i < 256; i += 1) {
-		            dictionary[String.fromCharCode(i)] = i;
-		        }
-		 
-		        for (i = 0; i < uncompressed.length; i += 1) {
-		            c = uncompressed.charAt(i);
-		            wc = w + c;
-		            //Do not use dictionary[wc] because javascript arrays 
-		            //will return values for array['pop'], array['push'] etc
-		           // if (dictionary[wc]) {
-		            if (dictionary.hasOwnProperty(wc)) {
-		                w = wc;
-		            } else {
-		                result.push(dictionary[w]);
-		                // Add wc to the dictionary.
-		                dictionary[wc] = dictSize++;
-		                w = String(c);
-		            }
-		        }
-		 
-		        // Output the code for w.
-		        if (w !== "") {
-		            result.push(dictionary[w]);
-		        }
-		        return result;
-		    }
-		</code>
-	</pre>
+	<div style="width: 700px; height: auto; padding: 16px; background-color: rgb(245, 242, 240);">
+		<ul>
+			<li style="background-color: skyblue; font-weight: bold;padding: 10px;color: #fff;">译码过程：</li>
+			<li>步骤1：初始化词典</li>
+			<li>步骤2：初始化P=空</li>
+			<li>步骤3：CW=读入码字</li>
+			<li>步骤4： CW是否在词典中</li>
+			<li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     是：P+CW对应的串中的第一个字符(C1)放入词典（注：如果已经在串表中了就无需放入）</li>
+			<li> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     否：P+P中的第一个字符(P1)放入词典</li>
+			<li>步骤5：P:=CW对应的串</li>
+			<li>步骤6：输出CW对应的串</li>
+			<li>步骤7：是否还有下一个码字，如果有跳转到步骤3，否则结束</li>
+
+		</ul>
+	</div>
 </div>
 <div class="animateContainer">
-	<!--<div class="inputBox">
-		<form name="myform">
-			<input type="text" name="strValue" />
-			<a class="button button-glow button-border button-rounded button-primary" onclick="startFun()">查看动画</a>
-		</form>
-	</div>-->
 	<div class="form-style-2 inputBox">
 		<form action="" method="post" name="myform">
 			
 			<label>
 				<span>请输入需要压缩的字符串</span>
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4" />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="4"  />-
-				<input type="text" class="tel-number-field" name="strValue" value="" maxlength="10"  />
+				<input type="text" class="input-field" name="field1" value="" />
 				<input type="button" value='提交' onclick='startFun()'/>
 			</label>
-			
+			<label>
+				<span>压缩结果为：</span>
+				<input type="text" style="background-color: rgba(128,128,128,0.4)!important;" class="input-field" name="resultStr" readonly="readonly" />
+			</label>
+			<label>
+				<span>压缩率为：</span>
+				<input type="text" style="background-color: rgba(128,128,128,0.4)!important;" class="input-field" name="rate" readonly="readonly" />
+			</label>
+			<label>
+				<span>解码上述压缩结果还原字符串得</span>
+				<input type="text" style="background-color: rgba(128,128,128,0.4)!important;" class="input-field" name="compressed" readonly="readonly" />
+			</label>
+
 		</form>
 	</div>
 	<div class="dicBox">
@@ -255,17 +219,22 @@
 	<div class="animateBox">
 
 		<script type="text/javascript">
+			//全局变量
+			var compressedDictionary = {};
+			var singleStrLen = 0;
+
 			//var str = "TOBEORNOTTOBEORTOBEORNOT";
 			//启动函数
 			function startFun(){
-				var x = document.getElementsByName("strValue");
+				/*var x = document.getElementsByName("strValue");
 				var i;
 				var str = "";
 				for (i = 0; i < x.length; i++) {
 				    str = str+x[i].value;
-				}
+				}*/
 				//console.log(str);
 				//var str = myform.strValue.value;
+				var str = myform.field1.value;
 				console.log('str = '+str);
 				compress(str);
 			}
@@ -338,11 +307,14 @@
 		            w = "",
 		            result = [],
 		            dictSize = inputString.length;
+		            singleStrLen = inputString.length;
 
 		        var countNum = 0;
 		        for (i = 0; i < dictSize; i += 1) {
 		        	document.getElementById('step_initDic').setAttribute('style','background-color:rgb(245,242,240);');
 		        	dictionary[inputString[i]] = i;
+
+		        	compressedDictionary[i] = inputString[i];
 
 		            var tab2 = document.getElementsByTagName('table')[0];
 		           // console.log(tab2);
@@ -367,7 +339,6 @@
 		        }
 		        document.getElementById('step_initDic').setAttribute('style','background-color:rgb(245,242,240);');
 		        	
-
 
 //		 		var count = 0;
 
@@ -471,7 +442,7 @@
 				                var tab2 = document.getElementsByTagName('table')[0];
 				                var tr2 = tab2.insertRow();
 				                //tr styles
-				                if((i+1)%2){ //odd
+				                if((dictSize-1)%2){ //odd
 				                	tr2.className = 'tdeven';
 				                	tr2.onmouseover = function(){this.className = 'td_over';};
 				                	tr2.onmouseout = function(){this.className = 'tdeven';};
@@ -540,11 +511,51 @@
 		       // return result;
 
 		       console.log(result);
+		       var resultBox = document.getElementsByName('resultStr')[0];
+		       resultBox.value = result;
+		       var rateBox = document.getElementsByName('rate')[0];
+		       rateBox.value = result.length/uncompressed.length;
+
+		       for(var i in compressedDictionary){
+		       		console.log(i+':'+compressedDictionary[i]);
+		       }
+		       decompress(result);
+		    }
+
+		    function decompress(compressedStr){
+		    	"use strict";
+		    	var w, 
+		    		result,
+		    		k,
+		    		i,
+		    		entry = "",
+		    		dictSize = singleStrLen;
+		    	console.log('dictSize = '+dictSize);
+		    	console.log(compressedStr[0]);
+		    	w = compressedDictionary[compressedStr[0]];
+		    	console.log('w='+w);
+		    	result = w;
+		    	for(i=1; i<compressedStr.length; i+=1){
+		    		k = compressedStr[i];
+		    		if(compressedDictionary[k]){
+		    			entry = compressedDictionary[k];
+		    		}else{
+		    			if(k == dictSize){
+		    				entry = w + w.charAt(0);
+		    			}
+		    		}
+		    		result += entry;
+		    		compressedDictionary[dictSize++] = w + entry.charAt(0);
+		    		w = entry;
+		    	}
+
+		    	document.getElementsByName('compressed')[0].value = result;
+		    	console.log('result2 = '+result);
+		    	//return result2;
 		    }
 		</script>
 	</div>
 </div>
-
 	
 </body>
 </html>
