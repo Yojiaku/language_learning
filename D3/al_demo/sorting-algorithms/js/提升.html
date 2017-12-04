@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>提升</title>
+</head>
+<body>
+<script type="text/javascript">
+//"use strict";
+	/*var john = {
+		name: 'John',
+		greet: function(person){
+			console.log("Hi "+person+", my name is "+ this.name);
+		}
+	};
+	var name = "Roy";
+	//john.greet("Mark");
+	var fx = john.greet;
+	fx.apply(john, ["Mark"]);
+	fx.call(john, "Mark");
+
+	var obj = {
+		id: "awesome",
+		cool: function(){
+			console.log(this.id);
+		}
+	};
+	var id = "not awesome";
+	setTimeout(obj.cool.apply(obj), 1000); // awesome
+	setTimeout(obj.cool.call(obj), 1000);  // awesome
+	//setTimeout(()=>obj.cool, 1000);
+
+	var obj2 = {
+		id: "awesome",
+		cool: function coolFn(){
+			setTimeout(()=>{
+				console.log(this.id);
+			}, 100);
+		}
+	};
+
+	obj2.cool();
+	//obj2.cool();*/
+
+	/*function Counter() {
+	  this.num = 0;
+	  this.timer = setInterval(() => {
+	    this.num++;
+	    console.log(this.num);
+	  }, 1000);
+	}
+	var b = new Counter();*/
+
+/*	var arguments = 42;
+	var arr = () => arguments;
+
+	console.log(arr()); // 42
+
+	function foo() {
+	  var f = (i) => arguments[0]+i; 
+	  // foo函数的间接参数绑定
+	  return f(2);
+	}
+
+	console.log(foo(1)); // 3
+*/
+
+/*'use strict';
+var obj = {
+  i: 10,
+  b: () => console.log(this.i, this),
+  c: function() {
+    console.log( this.i, this)
+  }
+}
+obj.b(); 
+// undefined
+obj.c(); 
+// 10, Object {...}
+*/
+
+/*var obj = {
+    birth: 1990,
+    getAge: function () {
+        var b = this.birth; // 1990
+        var fn = function () {
+            return new Date().getFullYear() - this.birth; // this指向window或undefined
+        };
+        return fn();
+    }
+};
+console.log(obj.getAge());
+*/
+var obj = {
+    birth: 1990,
+    getAge: function () {
+        var b = this.birth; // 1990
+        var fn = () => new Date().getFullYear() - this.birth; // this指向obj对象
+        return fn();
+    }
+};
+console.log(obj.getAge()); // 25
+
+	/*function Person(first, last, age){
+		this.first = first;
+		this.last = last;
+		this.age = age;
+	}
+	Person.prototype = {
+		getFullName: function(){
+			console.log(this.first+" "+this.last);
+		},
+		greet: function(other){
+			console.log("Hi "+other.first+", I'm "+this.first+".");
+		}
+	};
+
+	var elodie = new Person('Elodie', 'JauBert', 27);
+	var christophe = new Person('christophe', 'Porteneuve', 30);
+	//christophe.greet(elodie);
+	/*function times(n, fx, arg) {
+	  for (var index = 0; index < n; ++index) {
+	    fx(arg);
+	  }
+	}times(3, christophe.greet, elodie);*/
+	/*var fx = christophe.greet;
+	fx.apply(christophe, [elodie]);*/
+</script>
+</body>
+</html>

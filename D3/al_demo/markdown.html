@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<title>Hello Strapdown</title>
+
+<xmp theme="united" style="display:none;">
+# Markdown text goes in here
+
+This is an H1
+=============
+
+This is an H2
+-------------
+
+## Chapter 1
+
+`Lorem` ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+et dolore magna aliqua. 
+
+## Chapter 2
+
+>Markdown引用demo只需在 html 文件中引用strapdown.js，然后在标签内书写 Markdown 内容即可。浏览器加载时会自动将 Markdown 渲染为 HTML。再方便不过。
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+
+```javascript
+src="http://strapdownjs.com/v/0.2/strapdown.js"
+```
+
+> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+> 
+> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+> id sem consectetuer libero luctus adipiscing.
+
+![alt text](https://github.com/Yojiaku/MarkdownPhotos/blob/master/pic/queue-3-1-2.png?raw=true)
+
+> ## 这是一个标题。
+> 
+> 1.   这是第一行列表项。
+> 2.   这是第二行列表项。
+> 
+> 给出一些例子代码：
+> 
+>     return shell_exec("echo $input | $markdown_script");
+
+[1]: http://www.google.com/
+[yahoo]: http://www.yahoo.com/
+
+
+> This is the first level of quoting.
+>
+> > This is nested blockquote.
+>
+> Back to the first level.
+
+
+这个链接用 1 作为网址变量 [Google][1].
+这个链接用 yahoo 作为网址变量 [Yahoo!][yahoo].
+然后在文档的结尾为变量赋值（网址）
+
+  [1]: http://www.google.com/
+  [yahoo]: http://www.yahoo.com/
+</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</html>

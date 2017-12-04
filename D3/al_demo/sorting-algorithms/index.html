@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Sorting Algorithms</title>
+  <script src="https://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  <body>
+   
+   <noscript><p style="color:red">Sorry, this program requires JavaScript to run.</p></noscript>
+   
+   <h2>JavaScript Sorting Algorithms Drawn On Canvas</h2>
+<!--[if lt IE 9]>
+<div style="width:600px">
+<p><b>Note for Internet Explorer 8 and earlier:</b> This page uses an emulator
+for the HTML5 Canvas, which is not supported directly in your browser.  The
+emulator runs more slowly than the real thing.  And in this example, some
+text that should be shown on the canvas is <b>missing</b> because the emulator
+does not support text.  Please consider using Internet Explorer 9, Firefox,
+or Google Chrome.</p>
+</div>
+<br>
+<![endif]-->      
+   <div class='platform'>
+   <canvas id="sortcanvas" width=600 height=400 ></canvas>
+   </div>
+   <div class='controls'>
+      <p><select id="sortSelect">
+         <option value="1">Bubble Sort</option>
+         <option value="2">Selection Sort</option>
+         <option value="3">Insertion Sort</option>
+         <option value="4">Merge Sort</option>
+         <option value="5">Quick Sort</option>
+      </select></p>
+      <p><button id="newBtn">New Sort</button></p>
+      <p><input type=checkbox class='fastCheckBox' id="fastCheckbox"><label for="fastCheckbox">&nbsp;&nbsp;Fast</label></p>
+      <p><button id="runBtn">Run</button></p>
+      <p><button id="pauseBtn">Pause</button></p>
+      <p><button id="stepBtn">Step</button></p>
+      <p>
+         <b>Comparisons:&nbsp;&nbsp;</b><span id="compCt">0</span>
+      </p>
+      <p>
+         <b>Copies:&nbsp;&nbsp;</b> <span id="moveCt">0</span>
+      </p>
+   </div>
+   <div style="clear: both">
+      <br>
+      <p id="message1">&nbsp;&nbsp;</p>
+      <p id="message2">&nbsp;&nbsp;</p>
+   </div>
+   
+  
+   
+</body>
+</html>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
+
+    <script  src="js/index.js"></script>
+
+</body>
+</html>
