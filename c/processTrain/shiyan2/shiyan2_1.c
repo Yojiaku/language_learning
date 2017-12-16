@@ -28,7 +28,10 @@ int main()
         fclose(fp);
 
     	char pipeStr[] = "OK";
-        if(write(write_fd, pipeStr, strlen(pipeStr))) exit(0);
+        if(write(write_fd, pipeStr, sizeof(pipeStr))){
+            //printf("write ok successfully!\n");
+            exit(0);
+        } 
         else{
         	printf("write error\n");
         	exit(1);
@@ -43,6 +46,7 @@ int main()
     else if(child2 == 0){
     	char readBuffer[255];
     	if(read(read_fd, readBuffer, sizeof(readBuffer))){
+            //printf("%s\n", readBuffer);
     		if(strcmp(readBuffer, "OK") == 0){
     			if((fp=fopen("./text.txt", "r")) == NULL) printf("open file error!\n");
 		        else{

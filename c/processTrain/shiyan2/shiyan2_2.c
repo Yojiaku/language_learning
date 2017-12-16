@@ -7,7 +7,7 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 
-#define FILEPATH "./text2.txt"
+#define FILEPATH "."
 #define PROJID 1234
 
 struct msgbuf
@@ -51,8 +51,8 @@ int main(){
 
 		buf.mtype = 1;
 		char successStr[] = "OK";
-		strncpy(buf.mtext, successStr, strlen(successStr));
-		if(msgsnd(msgid, &buf, strlen(buf.mtext), 0) == -1){
+		strncpy(buf.mtext, successStr, sizeof(successStr));
+		if(msgsnd(msgid, &buf, sizeof(buf.mtext), 0) == -1){
 			perror("msgsnd()");
 			exit(1);
 		}
@@ -66,16 +66,19 @@ int main(){
 	pid_t child2 = fork();
 	if(child2 < 0) printf("Failed to create a process.\n");
 	else if(child2 == 0){
-        if(msgrcv(msgid, &buf, strlen(buf.mtext), 1, 0) == -1){
+        if(msgrcv(msgid, &buf, sizeof(buf.mtext), 1, 0) == -1){
         	perror("msgrcv()");
         	exit(1);
         }else{
-        	if((fp=fopen("./text2.txt", "r")) == NULL) printf("open file error!\n");
-	        else{
-	            fgets(fileBuffer, sizeof(fileBuffer), (FILE*)fp);
-	            printf("%s\n", fileBuffer);
-	        }
-	        fclose(fp);
+        	if(strcmp(buf.mtext, "OK") == 0){
+        		if((fp=fopen("./text2.txt", "r")) == NULL) printf("open file error!\n");
+		        else{
+		            fgets(fileBuffer, sizeof(fileBuffer), (FILE*)fp);
+		            printf("%s\n", fileBuffer);
+		        }
+		        fclose(fp);
+        	}
+        	
         }
 
         exit(0);
